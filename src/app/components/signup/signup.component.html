@@ -1,0 +1,25 @@
+<div class="container">
+  <h2 style="text-align: center;">Sign Up</h2>
+  <form #form="ngForm">
+  <mat-form-field class="form-control">
+    <input matInput placeholder="First Name" name="firstName" #firstName="ngModel" [(ngModel)]="newUser.firstName">
+  </mat-form-field>
+  <mat-form-field class="form-control">
+    <input matInput placeholder="Last Name">
+  </mat-form-field>
+  <mat-form-field class="form-control" style="width: 100%;">
+    <input matInput placeholder="Username" name="username" required #username="ngModel" [(ngModel)]="newUser.username">
+  </mat-form-field>
+  <mat-form-field class="form-control email">
+    <input type="email" matInput placeholder="Email">
+  </mat-form-field>
+  <mat-form-field class="form-control">
+    <input type="password" matInput placeholder="Password" name="password" [(ngModel)]="newUser.password">
+  </mat-form-field>
+  <mat-form-field class="form-control">
+    <input type="password" matInput placeholder="Confirm Password">
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="signup()">Submit</button>
+</form>
+{{form.value | json}}
+</div>

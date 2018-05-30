@@ -1,0 +1,24 @@
+<div class="container" *ngIf="user">
+  <form #form="ngForm">
+  <mat-form-field class="form-control">
+    <input matInput placeholder="First Name" name="firstName" #firstName="ngModel" [(ngModel)]="user.firstName">
+  </mat-form-field>
+  <mat-form-field class="form-control">
+    <input matInput placeholder="Last Name">
+  </mat-form-field>
+  <mat-form-field class="form-control">
+    <input matInput placeholder="Username" name="username" required #username="ngModel" [(ngModel)]="user.username">
+  </mat-form-field>
+  <mat-form-field class="form-control">
+    <input type="email" matInput placeholder="Email">
+  </mat-form-field>
+  <mat-form-field class="form-control">
+    <input type="password" matInput placeholder="Password" name="password" [(ngModel)]="user.password">
+  </mat-form-field>
+  <mat-form-field class="form-control">
+    <input type="password" matInput placeholder="Confirm Password">
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="saveSettings()">click</button>
+</form>
+{{form.value | json}}
+</div>

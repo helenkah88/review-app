@@ -1,0 +1,24 @@
+<div class="container">
+  <form #form="ngForm">
+  <mat-form-field class="form-control">
+    <input matInput placeholder="title" name="title" #title="ngModel" [(ngModel)]="review.title">
+  </mat-form-field>
+  <mat-form-field class="form-control">
+    <textarea matInput placeholder="description" name="description" #description="ngModel" [(ngModel)]="review.description"></textarea>
+  </mat-form-field> 
+  <div class="map-container">
+    <review-app-maps (addressEmitter)="setAddress($event)" [places]="places"></review-app-maps>
+  </div>
+ <h4 *ngIf="review.reviewImgs.length">Hover to delete</h4>
+  <div class="img-thumbs">
+    <div *ngFor="let img of review.reviewImgs; index as idx" class="img-thumb" (click)="deleteImg($event, idx)">
+      <img src="http://localhost:3000/{{img}}" alt="">
+      <a href="#">x</a>
+    </div>
+  </div>
+  <div class="dropzone-container" #dragContainer>
+    <review-app-upload></review-app-upload>
+  </div>
+</form>
+</div>
+<button mat-raised-button color="primary" (click)="saveReview()">click</button>

@@ -1,0 +1,13 @@
+<mat-toolbar>
+  <span routerLink="/">My App</span>
+  <span class="spacer"></span>
+  <button type="button" mat-button *ngIf="isSmallScreen()" (click)="toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div *ngIf="!isSmallScreen()">
+    <button mat-button *ngIf="authService.isAuthenticated" (click)="authService.logout()">Log Out</button>
+    <button mat-button *ngIf="!authService.isAuthenticated" (click)="openDialog()">Log In</button>
+    <button mat-button *ngIf="!authService.isAuthenticated" routerLink="/signup">Sign Up</button>
+    <button mat-button *ngIf="authService.isAuthenticated" routerLink="/profile/{{authService.userId}}">My Profile</button>
+  </div>
+</mat-toolbar>

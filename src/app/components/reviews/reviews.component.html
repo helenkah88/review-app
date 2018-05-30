@@ -1,0 +1,22 @@
+<div class="container">
+  <h2 class="h2-title">User's Reviews</h2>
+
+  <review-app-maps [places]="places"></review-app-maps>
+
+  <review-app-carousel *ngIf="reviews" [slideImgs]="slideImgs"></review-app-carousel>
+
+  <div class="reviews">
+    <h2 class="h2-title">Recent Reviews</h2>
+    <mat-card *ngFor="let review of reviews" class="review-card">
+      <mat-card-header>
+        <mat-card-title><a routerLink="/review/{{review?._id}}">{{ review?.title }}</a></mat-card-title>
+        <mat-card-subtitle><a routerLink="user/{{review?.user._id}}">Author: {{ review?.user.username }}</a></mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="http://localhost:3000/{{review.reviewImgs[review.reviewImgs.length - 1]}}" alt="{{review.title}}">
+      <mat-card-content>
+      <p>{{ review.description }}</p>
+      </mat-card-content>
+      <a routerLink="/review/{{review?._id}}" mat-button>View Page</a>
+    </mat-card>
+  </div>
+</div>
