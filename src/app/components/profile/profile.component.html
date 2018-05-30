@@ -1,0 +1,27 @@
+<div class="container" *ngIf="user">
+  <h2>{{ user.username }}</h2>
+  <div *ngIf="user.location"><span>location: </span>address: {{ user.location }}</div>
+  <h2>My Reviews</h2>
+  <div class="reviews">
+    <mat-card *ngFor="let review of user?.reviews" class="review-card">
+      <mat-card-header>
+        <mat-card-title><h2><a routerLink="/review/{{review?._id}}">{{ review?.title }}</a></h2></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div>{{ review.description }}</div>
+        <h4>Reviews List</h4>
+        <div class="img-thumbs">
+          <div *ngFor="let img of review.reviewImgs" class="img-thumb">
+            <img src="http://localhost:3000/{{img}}" alt="">
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button routerLink="/{{user._id}}/review/{{review._id}}/edit">Edit</button>
+        <button mat-button (click)="deleteReview(review._id)">Delete</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <button mat-raised-button color="primary" routerLink="/{{user._id}}/review/new">Create new review</button>
+  <button mat-raised-button color="primary" routerLink="/{{user._id}}/settings">Settings</button>
+</div>

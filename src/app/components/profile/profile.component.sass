@@ -1,0 +1,46 @@
+.reviews
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+
+  .review-card
+    width: 40%;
+    margin: 0 10px;
+    margin-bottom: 15px;
+
+    @media (max-width: 640px)
+      width: 100%;
+
+    .mat-card-title
+      margin-bottom: 5px;
+
+      h2
+        margin: 0;
+        font:
+          style: italic;
+          weight: normal;
+        text-transform: capitalize;
+        margin-left: -8px;
+
+    .mat-card-content
+      margin: 0;
+
+      h4
+        margin-bottom: 8px;
+        font-weight: normal;
+
+  .img-thumbs
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -7px;
+
+    .img-thumb
+      min-width: 84px;
+      max-width: 84px;
+      margin: 0 7px;
+      margin-bottom: 7px;
+
+      img
+        width: 100%;
+        height: 70px;
+        object-fit: cover;

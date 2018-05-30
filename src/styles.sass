@@ -1,1 +1,90 @@
 /* You can add global styles to this file, and also import other style files */
+/*@import "~@angular/material/prebuilt-themes/indigo-pink.css";*/
+@import "~@angular/material/theming";
+
+@include mat-core()
+
+$app-primary: mat-palette($mat-cyan, 300)
+$app-accent: mat-palette($mat-pink, 500)
+$app-warn: mat-palette($mat-red)
+
+$app-theme: mat-dark-theme($app-accent, $app-primary, $app-warn)
+
++angular-material-theme($app-theme)
+
+$darkColor: #212121
+
+html, body
+  width: 100%;
+  height: 100%;
+
+body
+  margin: 0
+  background: $darkColor
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+
+.flex
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  -o-flex-wrap: wrap;
+  flex-wrap: wrap;
+
+.h2-title
+  width: 100%;
+  font-weight: normal;
+  
+a
+  text-decoration: none;
+  color: #fff;
+
+.dropzone-container
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+
+  > *
+    flex-basis: 160px;
+    margin-right: 20px;
+
+  > *:last-child
+    margin-right: 0;
+    
+.dropzone
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 200px;
+  border: 2px dashed #aaa;
+  border-radius: 5px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  font-size: 12px;
+
+.dropzone img
+  max-width: 100%;
+
+.dropzone h5
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 12px;
+
+.highlight,
+.trash.highlight,
+.dropzone.highlight h5
+  color: #fff !important;
+  border-color: #fff;
+
+.progress
+  width: 80%;
+  text-align: center;
+  margin-top: 10px;
+
+  span
+    display: block;
+    margin-bottom: 5px;

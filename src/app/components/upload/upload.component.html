@@ -1,0 +1,9 @@
+<div class="dropzone" [class.highlight]="highlight" (dragover)="dragover($event)" (dragleave)="dragleave($event)" (drop)="drop($event)">
+  <h5 #text>Drag image here</h5>
+  <img src="{{uploadFile?.src}}" alt=""><!-- 
+  <button mat-raised-button color="primary" [style.display]="btnDisplay" (click)="uploadImg()">Upload</button>
+  <div [style.display]="progressDisplay" class="progress">
+    <span>Uploading..</span>
+    <mat-progress-bar #progress mode="determinate" value="40"></mat-progress-bar>
+  </div> -->
+</div>

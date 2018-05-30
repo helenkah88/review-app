@@ -1,0 +1,31 @@
+.reviews
+  display: flex;
+  flex-wrap: wrap;
+
+  .review-card
+    width: 20%;
+    padding: 10px 8px;
+    padding-bottom: 0;
+
+    img
+      object-fit: cover;
+      height: 120px;
+      
+      &.mat-card-image
+        width: calc(100% + 16px);
+        margin: 0 -8px 8px -8px;
+
+    .mat-card-header
+      margin: 0 -8px;
+
+    & + .review-card
+      margin-left: 20px;
+
+    .mat-card-content
+      margin-bottom: 0;
+      overflow: hidden;
+      max-height: 28px;
+      font-size: 12px;
+
+    .mat-card-title a
+      text-transform: capitalize;
