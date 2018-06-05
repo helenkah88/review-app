@@ -1,4 +1,4 @@
-<div class="carousel-wrapper">
+<div class="carousel-wrapper" *ngIf="reviews.length">
   <div class="carousel" #carousel (click)="clickHandler($event)">
     <div class="slides">
       <div *ngFor="let slide of slideImgs" class="slide"><img src="http://localhost:3000/{{slide}}" alt=""></div>

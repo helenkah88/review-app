@@ -1,13 +1,15 @@
-import { Component, OnInit, AfterViewInit, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, OnChanges, ElementRef, Input, ViewChild } from '@angular/core';
+import { Review } from '../../models/review';
 
 @Component({
   selector: 'review-app-carousel',
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.sass']
 })
-export class CarouselComponent implements OnInit, AfterViewInit {
+export class CarouselComponent implements OnInit, OnChanges {
 
   @Input() slideImgs: string[];
+  @Input() reviews: Review[];
   @Input() slideTo: string;
   @ViewChild('carousel') private carousel: ElementRef;
 
@@ -25,20 +27,29 @@ export class CarouselComponent implements OnInit, AfterViewInit {
   ngOnInit() {
   }
 
-  ngAfterViewInit() {
-    let firstSlide = this.carousel.nativeElement.querySelector('.slide');
-    this.activeItem = firstSlide;
-    let firstIndicator = this.carousel.nativeElement.querySelector('.indicator');
-    firstIndicator.classList.add('active');
-    this.activeIndicator = firstIndicator;
-    this.slideList = this.elem.querySelectorAll('.slide');
-    this.indicatorList = this.elem.querySelectorAll('.indicator');
+  ngOnChanges() {
+      console.log(this.reviews);
+      if(this.reviews.length) {
+          this.slideImgs = this.reviews.map(review => {
+            if(!review.reviewImgs.length) return;
+            return review.reviewImgs[review.reviewImgs.length - 1];
+          });
+          setTimeout(() => {
+            let firstSlide = this.carousel.nativeElement.querySelector('.slide');
+            this.activeItem = firstSlide;
+            let firstIndicator = this.carousel.nativeElement.querySelector('.indicator');
+            firstIndicator.classList.add('active');
+            this.activeIndicator = firstIndicator;
+            this.slideList = this.elem.querySelectorAll('.slide');
+            this.indicatorList = this.elem.querySelectorAll('.indicator');
 
-    this.slideList.forEach((slide, i) => {
-      slide.style.transform = `translate(${i*100}%)`;
-    })
+            this.slideList.forEach((slide, i) => {
+              slide.style.transform = `translate(${i*100}%)`;
+            })
 
-    this.startTimer();
+            this.startTimer();
+    }, 0);
+      }
   }
 
     clickHandler(e) {

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, ViewChild, ElementRef, EventEmitter, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import {} from '@types/googlemaps';
+import { Review } from '../../models/review';
 
 declare var google: any;
 
@@ -12,7 +13,8 @@ declare var google: any;
 export class MapsComponent implements OnInit, OnChanges {
 
   @Output() private addressEmitter: EventEmitter<string> = new EventEmitter();
-  @Input() private places: any[];
+  @Input() public places: any[];
+  @Input() private reviews: Review[];
 
   @ViewChild('gmap') gmap: ElementRef;
 
@@ -29,6 +31,13 @@ export class MapsComponent implements OnInit, OnChanges {
   ngOnChanges() {
     const self = this;
     let geocoder = new google.maps.Geocoder;
+
+    this.places = this.reviews.map(item => {
+      return {
+        placeId: item.location,
+        id: item._id
+      };
+    });
     if(this.places.length) {
       if(this.places.length === 1) {
         this.zoom = 12;

@@ -22,6 +22,8 @@ module.exports.getAllReviews = (req, res) => {
       })
     };
 
+    // console.log(response)
+
     res.status(200).json(response);
   })
   .catch(err => {

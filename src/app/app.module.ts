@@ -4,7 +4,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
+import { ReviewsEffects } from './store/effects/reviews.effects';
+import { reducers } from './store/reducers/core.reducer';
 import { MaterialModule } from './shared/material.module';
 
 import { AppComponent } from './app.component';
@@ -66,6 +70,8 @@ let routes: Routes = [
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([ReviewsEffects]),
     RouterModule.forRoot(routes)
   ],
   providers: [
