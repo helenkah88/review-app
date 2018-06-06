@@ -29,8 +29,9 @@ import { PostComponent } from './components/post-review/post.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { DraguploadDirective } from './directives/dragupload.directive';
+import { GoogleService } from './shared/services/google.service';
 import { CreateComponentService } from './shared/services/create-component.service';
-import { CarouselComponent } from './components/carousel/carousel.component';
+import { CarouselComponent } from './components/carousel/carousel.component.copy';
 import { MapsComponent } from './components/maps/maps.component';
 
 
@@ -78,6 +79,7 @@ let routes: Routes = [
     ReviewService,
     UserService,
     AuthService,
+    GoogleService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
     CreateComponentService
   ],

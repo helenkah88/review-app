@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, ViewChild, ElementRef, EventEmitter, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import {} from '@types/googlemaps';
+
+import { GoogleService } from '../../shared/services/google.service';
 import { Review } from '../../models/review';
 
 declare var google: any;
@@ -12,25 +14,38 @@ declare var google: any;
 })
 export class MapsComponent implements OnInit, OnChanges {
 
-  @Output() private addressEmitter: EventEmitter<string> = new EventEmitter();
-  @Input() public places: any[];
+  @Output() public addressEmitter: EventEmitter<string> = new EventEmitter();
   @Input() private reviews: Review[];
 
   @ViewChild('gmap') gmap: ElementRef;
 
   @ViewChild('queryInput') queryInput: ElementRef;
 
-  map: any;
+  public map: any;
+  private places: any[] = [];
   private zoom: number = 1;
 
-  constructor(private route: Router) { }
+  private position;
+  private setMarker = function(map, location) {
+    return new google.maps.Marker({
+      map: map,
+      position: location
+    });
+  }
+
+  constructor(private route: Router, private googleService: GoogleService) {}
 
   ngOnInit() {
+    this.position = { lat: 49.2331, lng: 28.4682};
+    this.map = this.googleService.callGoogleMethod('Map', null, [this.gmap.nativeElement, {
+      zoom: this.zoom,
+      center: this.position
+    }]);
   }
 
   ngOnChanges() {
     const self = this;
-    let geocoder = new google.maps.Geocoder;
+    if(!this.reviews.length) return;
 
     this.places = this.reviews.map(item => {
       return {
@@ -43,37 +58,24 @@ export class MapsComponent implements OnInit, OnChanges {
         this.zoom = 12;
       }
       for (let i = 0; i < this.places.length; i++) {
-        geocoder.geocode({placeId: this.places[i].placeId}, (results, status) => {
+        this.googleService.callGoogleMethod('Geocoder', 'geocode', [{placeId: this.places[i].placeId}, (results, status) => {
           if (status !== 'OK') return;
-          let marker = setMarker(this.map, results[0].geometry.location);
-          google.maps.event.addListener(marker, 'click', function() {
+          let marker = this.setMarker(this.map, results[0].geometry.location);
+          console.log(marker);
+          /*google.maps.event.addListener(marker, 'click', function() {
             self.route.navigate(['/review', self.places[i].id]);
-          });
-        });
+          });*/
+        }]);
       }
       if (this.places.length === 1) {
-        geocoder.geocode({placeId: this.places[0].placeId}, (results, status) => {
-          if(status !== 'OK') return;
+        this.googleService.callGoogleMethod('Geocoder', 'geocode', [{placeId: this.places[0].placeId}, (results, status) => {
+          if (status !== 'OK') return;
           this.map.setCenter(results[0].geometry.location);
-        })
+        }]);
       }
     }
-
-    function setMarker(map, location) {
-      return new google.maps.Marker({
-        map: map,
-        position: location
-      });
-    }
-  
-
-  // ngAfterViewInit() {
-    let position = { lat: 49.2331, lng: 28.4682};
-    this.map = new google.maps.Map(this.gmap.nativeElement, {
-      zoom: this.zoom,
-      center: position
-    });
-
+  }
+/*
     let autocomplete = new google.maps.places.Autocomplete(this.queryInput.nativeElement);
     autocomplete.addListener('place_changed', () => {
       let place = autocomplete.getPlace();
@@ -84,7 +86,7 @@ export class MapsComponent implements OnInit, OnChanges {
       });
       this.map.setCenter(position);
       this.addressEmitter.emit(place.place_id);
-    });
+    });*/
 
 /*
     let marker = new google.maps.Marker({
@@ -100,6 +102,6 @@ export class MapsComponent implements OnInit, OnChanges {
       info.open(this.map, marker);
     });*/
   // }
-  }
+  
 
 }

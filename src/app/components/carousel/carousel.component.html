@@ -1,40 +1,16 @@
-<div
-  class="carousel-wrapper"
-  #carousel
->
-  <div
-    class="carousel"
-    *ngIf="slideImgs.length"
-  >
-    <div
-      class="slides"
-      [style.transform]="getTransformValue()"
-    >
-      <div
-        *ngFor="let slide of slideImgs"
-        class="slide"
-      >
+<div class="carousel-wrapper" #carousel>
+  <div class="carousel" *ngIf="slideImgs.length">
+    <div class="slides" [style.transform]="getTransformValue()">
+      <div *ngFor="let slide of slideImgs" class="slide">
         <img src="{{slide}}" alt="">
       </div>
     </div>
     <ul class="indicators-wrapper">
-      <li
-        *ngFor="let slide of slideImgs; index as idx"
-      >
-        <a
-          class="indicator circle"
-          [class.active]="activeItem === idx"
-          (click)="slideTo(idx)"
-        ></a>
+      <li *ngFor="let slide of slideImgs; index as idx">
+        <a class="indicator circle" [class.active]="activeItem === idx" (click)="slideTo(idx)"></a>
       </li>
     </ul>
-    <a
-      class="controls prev"
-      (click)="prev()"
-    ><span><</span></a>
-    <a
-      class="controls next"
-      (click)="next()"
-    ><span>></span></a>
+    <a class="controls prev" (click)="prev()"><span><</span></a>
+    <a class="controls next" (click)="next()"><span>></span></a>
   </div>
 </div>

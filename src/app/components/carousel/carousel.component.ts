@@ -6,7 +6,7 @@ import { Review } from '../../models/review';
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.sass']
 })
-export class CarouselComponent implements OnChanges, AfterViewInit {
+export class CarouselCopyComponent implements OnChanges, AfterViewInit {
   @ViewChild('carousel') carousel: ElementRef;
   @Input() reviews: Review[];
 

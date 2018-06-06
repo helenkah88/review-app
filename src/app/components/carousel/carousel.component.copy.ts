@@ -3,10 +3,10 @@ import { Review } from '../../models/review';
 
 @Component({
   selector: 'review-app-carousel',
-  templateUrl: './carousel.component.html',
-  styleUrls: ['./carousel.component.sass']
+  templateUrl: './carousel.component.copy.html',
+  styleUrls: ['./carousel.component.copy.sass']
 })
-export class CarouselCopyComponent implements OnInit, OnChanges {
+export class CarouselComponent implements OnInit, OnChanges {
 
   @Input() slideImgs: string[];
   @Input() reviews: Review[];
@@ -30,7 +30,7 @@ export class CarouselCopyComponent implements OnInit, OnChanges {
   ngOnChanges() {
     // http://localhost:3000/
 
-      console.log(this.reviews);
+      // console.log(this.reviews);
       if(this.reviews.length) {
           this.slideImgs = this.reviews.map(review => {
             if(!review.reviewImgs.length) return;
