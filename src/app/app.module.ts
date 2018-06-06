@@ -29,7 +29,6 @@ import { CreateComponentService } from './shared/services/create-component.servi
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { MapsComponent } from './components/maps/maps.component';
 
-
 let routes: Routes = [
   { path: '', component: ReviewsComponent},
   { path: 'signup', component: SignupComponent},
