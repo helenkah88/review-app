@@ -1,15 +1,10 @@
-<div
-  class="carousel-wrapper"
-  #carousel
->
+<div class="carousel-wrapper" *ngIf="reviews.length">
   <div
     class="carousel"
-    *ngIf="slideImgs.length"
+    #carousel
+    (click)="clickHandler($event)"
   >
-    <div
-      class="slides"
-      [style.transform]="getTransformValue()"
-    >
+    <div class="slides">
       <div
         *ngFor="let slide of slideImgs"
         class="slide"
@@ -21,20 +16,18 @@
       <li
         *ngFor="let slide of slideImgs; index as idx"
       >
-        <a
-          class="indicator circle"
-          [class.active]="activeItem === idx"
-          (click)="slideTo(idx)"
-        ></a>
+        <a href="#" class="indicator circle" [attr.data-slide-to]="idx"></a>
       </li>
     </ul>
     <a
+      href="#"
       class="controls prev"
-      (click)="prev()"
+      data-target="prev"
     ><span><</span></a>
     <a
+      href="#"
       class="controls next"
-      (click)="next()"
+      data-target="next"
     ><span>></span></a>
   </div>
 </div>

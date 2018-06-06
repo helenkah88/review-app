@@ -22,8 +22,8 @@ a.controls
 
 .carousel
   position: relative;
-  //width: 600px;
-  //height: 300px;
+  width: 600px;
+  height: 300px;
   overflow: hidden;
   justify-content: center;
   margin: 20px auto 30px;
@@ -31,24 +31,19 @@ a.controls
 .slides
   position: relative;
   width: 100%;
-  //height: 100%;
+  height: 100%;
   flex-wrap: nowrap;
 
   transition: .6s;
 
 .slides .slide
-  flex: 100% 0 0
-  cursor: pointer
-  text-align: center
-
-  max-height: 600px
-  overflow: hidden
+  position: absolute;
+  width: 100%;
+  cursor: pointer;
 
 .slides .slide img
-  width: 100%
-  height: auto
-
-  object-position: center center
+  display: block;
+  width: 100%;
 
 .circle
   width: 16px;
