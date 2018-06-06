@@ -7,7 +7,7 @@
     <textarea matInput placeholder="description" name="description" #description="ngModel" [(ngModel)]="review.description"></textarea>
   </mat-form-field> 
   <div class="map-container">
-    <review-app-maps (addressEmitter)="setAddress($event)" [places]="places"></review-app-maps>
+    <!-- <review-app-maps (addressEmitter)="setAddress($event)" [reviews]="reviews$ | async"></review-app-maps> -->
   </div>
  <h4 *ngIf="review.reviewImgs.length">Hover to delete</h4>
   <div class="img-thumbs">

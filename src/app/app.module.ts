@@ -4,7 +4,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
+import { ReviewsEffects } from './store/effects/reviews.effects';
+import { reducers } from './store/reducers/core.reducer';
 import { MaterialModule } from './shared/material.module';
 
 import { AppComponent } from './app.component';
@@ -25,8 +29,9 @@ import { PostComponent } from './components/post-review/post.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { DraguploadDirective } from './directives/dragupload.directive';
+import { GoogleService } from './shared/services/google.service';
 import { CreateComponentService } from './shared/services/create-component.service';
-import { CarouselComponent } from './components/carousel/carousel.component';
+import { CarouselComponent } from './components/carousel/carousel.component.copy';
 import { MapsComponent } from './components/maps/maps.component';
 
 let routes: Routes = [
@@ -65,12 +70,15 @@ let routes: Routes = [
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([ReviewsEffects]),
     RouterModule.forRoot(routes)
   ],
   providers: [
     ReviewService,
     UserService,
     AuthService,
+    GoogleService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
     CreateComponentService
   ],

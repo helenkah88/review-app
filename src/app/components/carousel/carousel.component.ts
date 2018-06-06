@@ -1,137 +1,58 @@
-import { Component, OnInit, AfterViewInit, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, OnChanges, ElementRef, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { Review } from '../../models/review';
 
 @Component({
   selector: 'review-app-carousel',
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.sass']
 })
-export class CarouselComponent implements OnInit, AfterViewInit {
+export class CarouselCopyComponent implements OnChanges, AfterViewInit {
+  @ViewChild('carousel') carousel: ElementRef;
+  @Input() reviews: Review[];
 
-  @Input() slideImgs: string[];
-  @Input() slideTo: string;
-  @ViewChild('carousel') private carousel: ElementRef;
+  public slideImgs: string[] = [];
+  public activeItem = 0;
 
-  private elem;
+  private carouselWidth = 600;
   private timer;
-  private activeItem;
-  private activeIndicator;
-  private slideList;
-  private indicatorList;
+  private maxElements = 0;
 
-  constructor(private elemWrapper: ElementRef) {
-    this.elem = this.elemWrapper.nativeElement;
-  }
-
-  ngOnInit() {
+  ngOnChanges() {
+    if (this.reviews.length) {
+      const reviewImages = this.reviews.filter((review) => review.reviewImgs.length);
+      this.slideImgs = reviewImages.map((review) => `http://localhost:3000/${review.reviewImgs[review.reviewImgs.length - 1]}`);
+      this.maxElements = this.slideImgs.length;
+    }
   }
 
   ngAfterViewInit() {
-    let firstSlide = this.carousel.nativeElement.querySelector('.slide');
-    this.activeItem = firstSlide;
-    let firstIndicator = this.carousel.nativeElement.querySelector('.indicator');
-    firstIndicator.classList.add('active');
-    this.activeIndicator = firstIndicator;
-    this.slideList = this.elem.querySelectorAll('.slide');
-    this.indicatorList = this.elem.querySelectorAll('.indicator');
+    this.carouselWidth = this.carousel.nativeElement.offsetWidth;
 
-    this.slideList.forEach((slide, i) => {
-      slide.style.transform = `translate(${i*100}%)`;
-    })
-
-    this.startTimer();
+    window.addEventListener('resize', () => {
+      this.carouselWidth = this.carousel.nativeElement.offsetWidth;
+    });
   }
 
-    clickHandler(e) {
-        e.preventDefault();
-
-        let target = e.target.closest('.controls') || e.target.closest('.indicator');
-
-        if (!target) return;
-
-        if (this.timer) this.resetTimer();
-
-        if (target.classList.contains('controls')) {
-            this.handleControls(target);
-        } else if (target.classList.contains('indicator')) {
-            this.handleIndicators(target);
-        }
+  next() {
+    if (this.activeItem < this.maxElements - 1) {
+      this.activeItem += 1;
     }
+  }
 
-    handleControls(elem) {
-        let target = elem.dataset.target;
-
-        if (target === 'next') {
-            this.slideNext();
-        }
-        if (target === 'prev') {
-            this.slidePrev();
-        }
+  prev() {
+    if (this.activeItem !== 0) {
+      this.activeItem -= 1;
     }
+  }
 
-    slideNext() {
-        let elem = this.activeItem.nextElementSibling;
-        if (!this.activeItem.nextElementSibling) {
-            elem = this.activeItem.parentElement.firstElementChild;
-        }
-        let idx = Array.prototype.indexOf.call(this.slideList, elem);
-        this.setActiveSlide(elem, idx);
-        this.reset(this.activeIndicator);
-        this.setActiveIndicator(this.indicatorList[idx]);
+  slideTo(index) {
+    if (this.activeItem !== index) {
+      this.activeItem = index;
     }
+  }
 
-    slidePrev() {
-        let elem = this.activeItem.previousElementSibling;
-        if (!this.activeItem.previousElementSibling) {
-            elem = this.activeItem.parentElement.lastElementChild;
-        }
-        let idx = Array.prototype.indexOf.call(this.slideList, elem);
-        this.setActiveSlide(elem, idx);
-        this.reset(this.activeIndicator);
-        this.setActiveIndicator(this.indicatorList[idx]);
-    }
+  getTransformValue() {
+    return `translateX(-${this.activeItem * this.carouselWidth}px)`;
+  }
 
-    handleIndicators(elem) {
-
-        let target = elem.dataset.slideTo;
-        
-        this.reset(this.activeIndicator);
-        this.setActiveSlide(this.slideList[target], target);
-        this.setActiveIndicator(elem);
-    }
-
-    setActiveSlide(elem, idx) {
-        this.activeItem = elem;
-        let slides = this.carousel.nativeElement.querySelector('.slides');
-        slides.style.transform = `translateX(-${idx * 100}%)`;
-    }
-
-    setActiveIndicator(elem) {
-        elem.classList.add('active');
-        this.activeIndicator = elem;
-    }
-
-    reset(elem) {
-        elem.classList.remove('active');
-    }
-
-    resetTimer() {
-        clearInterval(this.timer);
-        this.timer = null;
-    }
-
-    startTimer() {
-        this.timer = setInterval(this.slide.bind(this), 4000);
-    }
-
-    slide() {
-        let elem = this.activeItem.nextElementSibling;
-
-        if (!this.activeItem.nextElementSibling) {
-            elem = this.activeItem.parentElement.firstElementChild;
-        }
-        let idx = Array.prototype.indexOf.call(this.slideList, elem);
-        this.setActiveSlide(elem, idx);
-        this.reset(this.activeIndicator);
-        this.setActiveIndicator(this.indicatorList[idx]);
-    }
 }
