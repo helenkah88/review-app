@@ -29,6 +29,7 @@ import { PostComponent } from './components/post-review/post.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { DraguploadDirective } from './directives/dragupload.directive';
+import { GoogleLoadDirective } from './directives/maps.directive';
 import { GoogleService } from './shared/services/google.service';
 import { CreateComponentService } from './shared/services/create-component.service';
 import { CarouselComponent } from './components/carousel/carousel.component.copy';
@@ -61,9 +62,10 @@ let routes: Routes = [
     PostComponent,
     SettingsComponent,
     UploadComponent,
-    DraguploadDirective,
     CarouselComponent,
-    MapsComponent
+    MapsComponent,
+    DraguploadDirective,
+    GoogleLoadDirective
   ],
   imports: [
     BrowserModule,
