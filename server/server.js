@@ -38,6 +38,9 @@ app.use('/profile', profileRoute);
 // get a single user (unprotected)
 app.get('/users/:userId', singleUserCtrl);
 
+// get all users
+app.use('/users', usersReviewCtrl.getAllUsers);
+
 // get all reviews (unprotected)
 app.use('/reviews', usersReviewCtrl.getAllReviews);
 

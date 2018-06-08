@@ -35,6 +35,6 @@ export function reviewsReducer(state = initialState, action: actions.ReviewsActi
 }
 
 export const getReviews = (state: ReviewsState) => {
-	// console.log(state.reviews);
+	console.log(state.reviews);
 	return state.reviews;
 }

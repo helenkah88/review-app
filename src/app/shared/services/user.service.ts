@@ -11,6 +11,14 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
+  getAll(): Observable<any> {
+    return this.http.get(this.path + '/users', {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
   getSingle(id: string): Observable<any> {
     return this.http.get(this.path + '/users/' + id, {
       headers: new HttpHeaders({

@@ -4,6 +4,9 @@
   <review-app-maps *reviewGoogleLoad [reviews]="reviews$ | async"></review-app-maps>
   <review-app-carousel [reviews]="reviews$ | async"></review-app-carousel>
 
+  <div>users: {{ users$ | async | json }}</div>
+  <div>users: {{ reviews$ | async | json }}</div>
+
   <div class="reviews">
     <h2 class="h2-title">Recent Reviews</h2>
     <mat-card *ngFor="let review of (reviews$ | async)" class="review-card">

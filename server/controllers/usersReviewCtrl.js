@@ -1,4 +1,34 @@
 let Review = require('../models/Reviews');
+let User = require('../models/Users');
+
+module.exports.getAllUsers = (req, res) => {
+  User.find()
+  .then(result => {
+    console.log(result);
+    let data = [];
+    if(result.length) {
+      data = result.map(item => {
+        return {
+          _id: item._id,
+          username: item.username
+        }
+      });
+    }
+    let response = {
+      count: result.length,
+      data: data
+    }
+
+    console.log(response);
+    res.status(200).json(response);
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json({
+      msg: err
+    })
+  })
+};
 
 module.exports.getAllReviews = (req, res) => {
   Review.find()
