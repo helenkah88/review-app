@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import { Store, select } from '@ngrx/store'
+
 import { UserService } from '../../shared/services/user.service';
 import { ReviewService } from '../../shared/services/review.service';
 import { User } from '../../models/user';
+import { AppState } from '../../store/models/app.state';
+import { selectReviews } from '../../store/reducers/core.reducer';
 
 @Component({
   selector: 'review-app-profile',
@@ -13,7 +18,11 @@ export class ProfileComponent implements OnInit {
 
   user: User = new User;
 
-  constructor(private userService: UserService, private reviewService: ReviewService, private route: ActivatedRoute) { }
+  constructor(
+    private userService: UserService,
+    private reviewService: ReviewService,
+    private route: ActivatedRoute,
+    private store: Store<AppState>) {}
 
   ngOnInit() {
     let id = this.route.snapshot.params.userId;

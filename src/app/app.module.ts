@@ -8,6 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { ReviewsEffects } from './store/effects/reviews.effects';
+import { UsersEffects } from './store/effects/users.effects';
 import { reducers } from './store/reducers/core.reducer';
 import { MaterialModule } from './shared/material.module';
 
@@ -29,6 +30,7 @@ import { PostComponent } from './components/post-review/post.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { DraguploadDirective } from './directives/dragupload.directive';
+import { GoogleLoadDirective } from './directives/maps.directive';
 import { GoogleService } from './shared/services/google.service';
 import { CreateComponentService } from './shared/services/create-component.service';
 import { CarouselComponent } from './components/carousel/carousel.component.copy';
@@ -60,9 +62,10 @@ let routes: Routes = [
     PostComponent,
     SettingsComponent,
     UploadComponent,
-    DraguploadDirective,
     CarouselComponent,
-    MapsComponent
+    MapsComponent,
+    DraguploadDirective,
+    GoogleLoadDirective
   ],
   imports: [
     BrowserModule,
@@ -71,7 +74,7 @@ let routes: Routes = [
     MaterialModule,
     FormsModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([ReviewsEffects]),
+    EffectsModule.forRoot([ReviewsEffects, UsersEffects]),
     RouterModule.forRoot(routes)
   ],
   providers: [

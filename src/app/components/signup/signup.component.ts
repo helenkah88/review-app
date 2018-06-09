@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+
 import { User } from '../../models/user';
 import { AuthService } from '../../shared/services/auth.service';
+import * as actions from '../../store/actions/users.actions';
+import { AppState } from '../../store/models/app.state';
 
 @Component({
   selector: 'review-app-signup',
@@ -11,7 +15,7 @@ export class SignupComponent implements OnInit {
 
   public newUser: User;
 
-  constructor(private authService: AuthService) {
+  constructor(private store: Store<AppState>) {
   }
   ngOnInit() {
 
@@ -19,10 +23,11 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
-    this.authService.signup(this.newUser)
+    this.store.dispatch(new actions.Sign(this.newUser));
+    /*this.authService.signup(this.newUser)
     .subscribe((response) => {
       this.authService.saveToken(response.data.token);
-    })
+    })*/
   }
 
 }

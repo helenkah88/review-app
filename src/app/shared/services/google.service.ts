@@ -34,7 +34,7 @@ export class GoogleService {
 			});
 		}
 	}
-
+/*
 	callGoogleMethod(className, methodName, args) {
 		if(this.google) {
 			switch (className) {
@@ -52,5 +52,5 @@ export class GoogleService {
 		} else {
 			this.initCallbacks.push({className, methodName, args});
 		}
-	}
+	}*/
 }
