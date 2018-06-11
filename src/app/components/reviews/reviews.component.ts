@@ -9,8 +9,7 @@ import { ReviewService } from '../../shared/services/review.service';
 import { Review } from '../../models/review';
 import { User } from '../../models/user';
 import { AppState } from '../../store/models/app.state';
-import { selectReviews } from '../../store/reducers/core.reducer';
-import { selectUsers } from '../../store/reducers/core.reducer';
+import { selectUsers, selectReviews } from '../../store/reducers/core.reducer';
 
 @Component({
   selector: 'review-app-reviews',

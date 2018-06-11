@@ -15,9 +15,6 @@ export class UsersEffects {
 	users$ = this.actions$.ofType(actions.GET_USERS)
 		.switchMap(() => {
 			return this.userService.getAll()
-				.map(response => {
-					console.log(response.data);
-					return {type: actions.GET_USERS_SUCCESS, payload: response.data}
-				});
+				.map(response => new actions.GetUsersSuccess(response.data));
 		})
 }

@@ -15,9 +15,6 @@ export class ReviewsEffects {
 	reviews$ = this.actions$.ofType(actions.GET_REVIEWS)
 		.switchMap(() => {
 			return this.reviewService.getAll()
-				.map(response => {
-					console.log(response.data);
-					return new actions.GetReviewsSuccess(response.data)
-				})
+				.map(response => new actions.GetReviewsSuccess(response.data))
 		})
 }

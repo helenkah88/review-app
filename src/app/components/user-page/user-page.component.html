@@ -1,10 +1,12 @@
+user {{ user}}
+rev {{ reviews$ | async | json}}
 <div class="container" *ngIf="user">
   <h4>{{ user?.username }}</h4>
-  <div *ngFor="let review of user?.reviews">
+  <div *ngFor="let review of (reviews$ | async)">
     <mat-card class="example-card">
       <mat-card-header>
         <!-- <div mat-card-avatar class="example-header-image"></div> -->
-        <mat-card-title><a routerLink="/review/{{review?.id}}">{{ review?.title }}</a></mat-card-title>
+        <mat-card-title><a routerLink="/review/{{review?._id}}">{{ review?.title }}</a></mat-card-title>
       </mat-card-header>
       <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
       <mat-card-content>

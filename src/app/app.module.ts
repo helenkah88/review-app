@@ -9,6 +9,7 @@ import { EffectsModule } from '@ngrx/effects';
 
 import { ReviewsEffects } from './store/effects/reviews.effects';
 import { UsersEffects } from './store/effects/users.effects';
+import { AuthEffects } from './store/effects/auth.effects';
 import { reducers } from './store/reducers/core.reducer';
 import { MaterialModule } from './shared/material.module';
 
@@ -75,7 +76,7 @@ let routes: Routes = [
     MaterialModule,
     FormsModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([ReviewsEffects, UsersEffects]),
+    EffectsModule.forRoot([ReviewsEffects, UsersEffects, AuthEffects]),
     RouterModule.forRoot(routes)
   ],
   providers: [
