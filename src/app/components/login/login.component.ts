@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
 import { MatDialogRef } from '@angular/material';
+
+import { AppState } from '../../store/models/app.state';
 import { User } from '../../models/user';
-import { AuthService } from '../../shared/services/auth.service';
+import { LOGIN } from '../../store/actions/auth.actions';
+import { selectCurrentUser } from '../../store/reducers/core.reducer';
 
 @Component({
   selector: 'review-app-login',
@@ -12,10 +16,15 @@ export class LoginComponent implements OnInit {
 
   public user: User;
 
-  constructor(private authService: AuthService, private dialogRef: MatDialogRef<LoginComponent>) {
+  constructor(private store: Store<AppState>, private dialogRef: MatDialogRef<LoginComponent>) {
   }
   ngOnInit() {
     this.user = new User();
+
+    this.store.pipe(
+      select(selectCurrentUser)
+    )
+    .subscribe()
   }
 
   dismiss() {
@@ -23,12 +32,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log(this.user);
-    this.authService.login(this.user)
-    .subscribe((response) => {
-      this.authService.saveToken(response.token);
-      this.dialogRef.close(this.user);
-    })
+    this.store.dispatch({type: LOGIN, payload: this.user});
+    this.dialogRef.close(this.user);
   }
 
 }

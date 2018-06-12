@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ReviewService } from '../../shared/services/review.service';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
+import { AppState } from '../../store/models/app.state';
+import { selectReviews } from '../../store/reducers/core.reducer';
 import { Review } from '../../models/review';
+import { GET_REVIEWS } from '../../store/actions/reviews.actions';
 
 @Component({
   selector: 'review-app-review-page',
@@ -15,18 +20,19 @@ export class ReviewPageComponent implements OnInit {
   slideImgs: string[] = [];
   places: string[] = [];
 
-  constructor(private reviewService: ReviewService, private route: ActivatedRoute) { }
+  constructor(private store: Store<AppState>, private route: ActivatedRoute) {}
 
   ngOnInit() {
+
+    this.store.dispatch({type: GET_REVIEWS});
+
     let id = this.route.snapshot.params.reviewId;
-    this.reviewService.getSingle(id)
-    .subscribe(response => {
-      console.log(response.data);
-      this.review = response.data;
-      let location = [];
-      location.push(this.review.location);
-      this.places = location;
-      this.slideImgs = response.data.reviewImgs;
+    this.store.pipe(
+      select(selectReviews),
+      map(reviews => reviews)
+    )
+    .subscribe(reviews => {
+        this.review = reviews.filter(review => review._id === id)[0];
     })
   }
 

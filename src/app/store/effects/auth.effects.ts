@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Effect, Actions } from '@ngrx/effects';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/map';
+import { map, switchMap } from 'rxjs/operators';
 
 import * as actions from '../actions/auth.actions';
 import { AuthService } from '../../shared/services/auth.service';
@@ -13,16 +12,33 @@ export class AuthEffects {
 	constructor(private actions$: Actions, private authService: AuthService, private router: Router) {}
 
 	@Effect()
-	currentUser$ = this.actions$.ofType(actions.SIGNUP)
-		.map((action: actions.Sign) => {
+	loggedUser = this.actions$.ofType(actions.LOGIN)
+	.pipe(
+		map((action: actions.Login) => {
 			return action.payload;
+		}),
+		switchMap((payload) => {
+			return this.authService.login(payload)
+				.map(response => {
+					this.authService.saveToken(response.token);
+					return new actions.LoginSuccess(response);
+				});
 		})
-		.switchMap((payload) => {
+	);
+
+	@Effect()
+	currentUser = this.actions$.ofType(actions.SIGNUP)
+	.pipe(
+		map((action: actions.Signup) => {
+			return action.payload;
+		}),
+		switchMap((payload) => {
 			return this.authService.signup(payload)
 				.map(response => {
 					this.authService.saveToken(response.data.token);
 					this.router.navigate(['/profile', response.data._id]);
-					return new actions.SignSuccess(response.data);
+					return new actions.SignupSuccess(response.data);
 				});
 		})
+	);
 }

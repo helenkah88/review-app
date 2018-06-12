@@ -29,6 +29,7 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
+    console.log('signup');
     this.store.dispatch({ type: actions.SIGNUP, payload: this.newUser});
   }
 

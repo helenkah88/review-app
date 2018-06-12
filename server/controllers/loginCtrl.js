@@ -18,6 +18,7 @@ module.exports = (req, res) => {
         });
       }
       if (result) {
+        console.log(result)
         let token = jwt.sign({userId: user._id}, 'secret', { expiresIn: 1800});
         res.status(200).json({
           token: token,

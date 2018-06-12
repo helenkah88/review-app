@@ -6,21 +6,43 @@ export const SIGNUP = '[Users] Sign Up';
 export const SIGNUP_SUCCESS = '[Users] Sign Up Success';
 export const SIGNUP_FAIL = '[Users] Sign Up Fail';
 
-export class Sign implements Action {
-	readonly type = SIGNUP;
+export const LOGIN = '[Users] Login';
+export const LOGIN_SUCCESS = '[Users] Login Success';
+export const LOGIN_FAIL = '[Users] Login Fail';
+
+export class Signup implements Action {
+	readonly type = LOGIN;
 	constructor(public payload: User) {}
 }
 
-export class SignSuccess implements Action {
+export class SignupSuccess implements Action {
 	readonly type = SIGNUP_SUCCESS;
 	constructor(public payload: any) {}
 }
 
-export class SignFail implements Action {
+export class SignupFail implements Action {
 	readonly type = SIGNUP_FAIL;
 	constructor(public payload: any) {}
 }
 
-export type UsersAction = Sign
- | SignSuccess
- | SignFail
+export class Login implements Action {
+	readonly type = LOGIN;
+	constructor(public payload: User) {}
+}
+
+export class LoginSuccess implements Action {
+	readonly type = LOGIN_SUCCESS;
+	constructor(public payload: any) {}
+}
+
+export class LoginFail implements Action {
+	readonly type = LOGIN_FAIL;
+	constructor(public payload: any) {}
+}
+
+export type UsersAction = Signup
+ | SignupSuccess
+ | SignupFail
+ | Login
+ | LoginSuccess
+ | LoginFail

@@ -15,6 +15,12 @@ export function currentUserReducer(state = currentUser, action: actions.UsersAct
 				username: action.payload.username,
 				id: action.payload._id
 			}
+		case actions.LOGIN_SUCCESS:
+			return {
+				...state,
+				username: action.payload.username,
+				id: action.payload._id
+			}
 		default:
 			return state;
 	}

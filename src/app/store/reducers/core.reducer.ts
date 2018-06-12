@@ -29,16 +29,13 @@ export const selectCurrentUser = createSelector(
 	fromAuth.getCurrentUser
 );
 
-export const selectReviewsByUser = createSelector(
-	(state: AppState) => {
-		console.log(state);
-		return state.currentUser
-	},
+export const selectReviewsByOwner = createSelector(
+	selectCurrentUser,
 	selectReviews,
 	(currentUser, reviews) => {
 		if(currentUser && reviews) {
-			let res = reviews.filter(review => currentUser === review.user);
-			console.log(currentUser, reviews);
+			let res = reviews.filter(review => currentUser === review.user._id);
+			console.log(currentUser, reviews, res);
 			return res;
 		}
 	}
