@@ -31,6 +31,14 @@ export class AuthService {
     return !!localStorage.getItem(this.TOKEN_KEY);
   }
 
+  getLoggedinUser() {
+    return this.http.get(this.path + '/loggedin_user', {
+      headers: new HttpHeaders({
+         'Content-Type': 'application/json'
+      })
+    })
+  }
+
   signup(user: User): Observable<any> {
     return this.http.post(this.path + '/signup', user, {
       headers: new HttpHeaders({

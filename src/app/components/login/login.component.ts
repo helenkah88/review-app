@@ -5,7 +5,7 @@ import { MatDialogRef } from '@angular/material';
 import { AppState } from '../../store/models/app.state';
 import { User } from '../../models/user';
 import { LOGIN } from '../../store/actions/auth.actions';
-import { selectCurrentUser } from '../../store/reducers/core.reducer';
+import { selectLoggedinUser } from '../../store/reducers/core.reducer';
 
 @Component({
   selector: 'review-app-login',
@@ -22,9 +22,9 @@ export class LoginComponent implements OnInit {
     this.user = new User();
 
     this.store.pipe(
-      select(selectCurrentUser)
+      select(selectLoggedinUser)
     )
-    .subscribe()
+    .subscribe(user => console.log(user))
   }
 
   dismiss() {

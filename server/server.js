@@ -32,6 +32,9 @@ let usersReviewCtrl = require('./controllers/usersReviewCtrl');
 // manage owner's reviews (accessible only from the owner's page)
 app.use('/profile/review', ownersReviewRoute);
 
+// get loggedin user
+app.use('/loggedin_user', profileRoute);
+
 // get owner's profile (protected)
 app.use('/profile', profileRoute);
 

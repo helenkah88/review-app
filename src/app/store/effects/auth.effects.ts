@@ -21,10 +21,22 @@ export class AuthEffects {
 			return this.authService.login(payload)
 				.map(response => {
 					this.authService.saveToken(response.token);
+					console.log(response);
 					return new actions.LoginSuccess(response);
 				});
 		})
 	);
+
+	@Effect()
+	initialUser = this.actions$.ofType(actions.GET_LOGGEDIN_USER)
+	.pipe(
+		switchMap(() => {
+			return this.authService.getLoggedinUser()
+			.map(response => {
+				return new actions.GetLoggedinUserSuccess(response);
+			})
+		})	
+	)
 
 	@Effect()
 	currentUser = this.actions$.ofType(actions.SIGNUP)

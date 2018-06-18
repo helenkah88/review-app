@@ -4,6 +4,9 @@ let checkAuth = require('../controllers/authCtrl');
 
 let userCtrl = require('../controllers/userCtrl');
 
+// get loggedin user
+router.get('', checkAuth, userCtrl.getLoggedinUser);
+
 // get single user
 router.get('/:userId', checkAuth, userCtrl.getProfile);
 

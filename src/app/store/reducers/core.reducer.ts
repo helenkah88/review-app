@@ -8,7 +8,7 @@ import { ReviewsState } from '../models/reviews.state';
 export const reducers: ActionReducerMap<AppState> = {
   reviews: fromReviews.reviewsReducer,
   users: fromUsers.usersReducer,
-  currentUser: fromAuth.currentUserReducer
+  loggedinUser: fromAuth.loggedinUserReducer
 };
 
 export const selectFeature = createFeatureSelector<ReviewsState>('reviews');
@@ -24,18 +24,18 @@ export const selectUsers = createSelector(
 	fromUsers.getUsers
 );
 
-export const selectCurrentUser = createSelector(
-	(state: AppState) => state.currentUser,
-	fromAuth.getCurrentUser
+export const selectLoggedinUser = createSelector(
+	(state: AppState) => state.loggedinUser,
+	fromAuth.getLoggedinUserId
 );
 
 export const selectReviewsByOwner = createSelector(
-	selectCurrentUser,
+	selectLoggedinUser,
 	selectReviews,
-	(currentUser, reviews) => {
-		if(currentUser && reviews) {
-			let res = reviews.filter(review => currentUser === review.user._id);
-			console.log(currentUser, reviews, res);
+	(loggedinUser, reviews) => {
+		if(loggedinUser && reviews) {
+			let res = reviews.filter(review => loggedinUser === review.user._id);
+			console.log(loggedinUser, reviews, res);
 			return res;
 		}
 	}

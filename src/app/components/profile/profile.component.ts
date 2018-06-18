@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Store, select } from '@ngrx/store'
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../../store/models/app.state';
 
-import { UserService } from '../../shared/services/user.service';
 import { ReviewService } from '../../shared/services/review.service';
 import { User } from '../../models/user';
-import { AppState } from '../../store/models/app.state';
 import { selectReviews } from '../../store/reducers/core.reducer';
 
 @Component({
@@ -19,18 +18,20 @@ export class ProfileComponent implements OnInit {
   user: User = new User;
 
   constructor(
-    private userService: UserService,
     private reviewService: ReviewService,
     private route: ActivatedRoute,
     private store: Store<AppState>) {}
 
-  ngOnInit() {
-    let id = this.route.snapshot.params.userId;
+  ngOnInit() {/*
+    this.store.pipe(
+      select(selectReviews)
+    )*/
+    /*let id = this.route.snapshot.params.userId;
     this.userService.getOwner(id)
     .subscribe(response => {
       this.user = response.data;
       console.log(this.user);
-    })
+    })*/
   }
 
   deleteReview(id) {
