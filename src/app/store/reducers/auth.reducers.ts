@@ -1,13 +1,13 @@
 import { Action } from '@ngrx/store';
 import * as actions from '../actions/auth.actions';
-import { currentUserState } from '../models/currentUser.state';
+import { loggedinUserState } from '../models/currentUser.state';
 
-export const currentUser: currentUserState = {
+export const loggedinUser: loggedinUserState = {
 	username: '',
 	id: ''
 }
 
-export function currentUserReducer(state = currentUser, action: actions.UsersAction) {
+export function loggedinUserReducer(state = loggedinUser, action: actions.UsersAction) {
 	switch (action.type) {
 		case actions.SIGNUP_SUCCESS:
 			return {
@@ -15,9 +15,16 @@ export function currentUserReducer(state = currentUser, action: actions.UsersAct
 				username: action.payload.username,
 				id: action.payload._id
 			}
+		case actions.LOGIN_SUCCESS:
+		case actions.GET_LOGGEDIN_USER_SUCCESS:
+			return {
+				...state,
+				// username: action.payload.username,
+				id: action.payload._id
+			}
 		default:
 			return state;
 	}
 }
 
-export const getCurrentUser = (state: currentUserState) => state.id;
+export const getLoggedinUserId = (state: loggedinUserState) => state.id;

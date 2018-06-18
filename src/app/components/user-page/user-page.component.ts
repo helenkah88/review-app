@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
+import { map } from 'rxjs/operators';
+
 import { AppState } from '../../store/models/app.state';
+import * as actions from '../../store/actions/users.actions';
+
 import { User } from '../../models/user';
 import { Review } from '../../models/review';
-import { selectReviewsByUser, selectCurrentUser, selectReviews } from '../../store/reducers/core.reducer';
+import * as fromCoreReducers from '../../store/reducers/core.reducer';
 import * as reviewsActions from '../../store/actions/reviews.actions';
-
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'review-app-user-page',
@@ -17,13 +20,32 @@ import { map } from 'rxjs/operators';
 export class UserPageComponent implements OnInit {
 
   user: any;
-  reviews$: Observable<Review[]>;
+  reviews: Review[];
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    console.log(1);
+
+    this.store.dispatch({type: actions.GET_USERS});
+
+    let id = this.route.snapshot.params.userId;
     this.store.pipe(
+      select(fromCoreReducers.selectUsers),
+      map(users => users.filter(user => user._id === id))
+    )
+    .subscribe(user => {
+      if(user) {
+        this.user = user[0];
+        this.store.pipe(
+          select(fromCoreReducers.selectReviews),
+          map(reviews => reviews)
+        )
+        .subscribe(reviews => {
+          this.reviews = reviews.filter(review => review.user._id === this.user._id)
+        })
+      }
+    })
+    /*this.store.pipe(
       select(selectCurrentUser),
       map(user => {
         console.log(user);
@@ -31,11 +53,11 @@ export class UserPageComponent implements OnInit {
       })
     ).subscribe((user) => {
       this.user = user;
-    })
+    })*/
     
-    this.reviews$ = this.store.pipe(
+    /*this.reviews$ = this.store.pipe(
       select(selectReviewsByUser)
-    );
+    );*/
 /*
     this.reviews$ = this.store.pipe(
       select(selectReviews)

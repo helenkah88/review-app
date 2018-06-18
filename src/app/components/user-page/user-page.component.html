@@ -1,14 +1,12 @@
-user {{ user}}
-rev {{ reviews$ | async | json}}
 <div class="container" *ngIf="user">
   <h4>{{ user?.username }}</h4>
-  <div *ngFor="let review of (reviews$ | async)">
-    <mat-card class="example-card">
+  <div class="reviews">
+    <mat-card *ngFor="let review of reviews" class="review-card" style="margin-bottom: 20px;">
       <mat-card-header>
         <!-- <div mat-card-avatar class="example-header-image"></div> -->
         <mat-card-title><a routerLink="/review/{{review?._id}}">{{ review?.title }}</a></mat-card-title>
       </mat-card-header>
-      <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
       <mat-card-content>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, modi.</p>
       </mat-card-content>

@@ -1,6 +1,6 @@
 import { User } from '../../models/user';
 
-export interface currentUserState {
-	username: string,
+export interface loggedinUserState {
+	username?: string,
 	id: string
 }

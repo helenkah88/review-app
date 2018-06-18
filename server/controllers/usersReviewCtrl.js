@@ -4,7 +4,6 @@ let User = require('../models/Users');
 module.exports.getAllUsers = (req, res) => {
   User.find()
   .then(result => {
-    console.log(result);
     let data = [];
     if(result.length) {
       data = result.map(item => {
@@ -19,7 +18,7 @@ module.exports.getAllUsers = (req, res) => {
       data: data
     }
 
-    console.log(response);
+    // console.log(response);
     res.status(200).json(response);
   })
   .catch(err => {

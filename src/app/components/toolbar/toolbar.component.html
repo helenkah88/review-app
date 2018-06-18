@@ -8,6 +8,6 @@
     <button mat-button *ngIf="authService.isAuthenticated" (click)="authService.logout()">Log Out</button>
     <button mat-button *ngIf="!authService.isAuthenticated" (click)="openDialog()">Log In</button>
     <button mat-button *ngIf="!authService.isAuthenticated" routerLink="/signup">Sign Up</button>
-    <button mat-button *ngIf="authService.isAuthenticated" routerLink="/profile/{{authService.userId}}">My Profile</button>
+    <a *ngIf="authService.isAuthenticated" routerLink="/profile/{{loggedInUserId}}">My Profile</a>
   </div>
 </mat-toolbar>

@@ -13,7 +13,13 @@ module.exports = (req, res, next) => {
   try {
     let decoded = jwt.verify(token, 'secret');
     console.log(decoded.userId, req.params.userId);
-    if (decoded.userId === req.params.userId) {
+    if(decoded.userId) {
+      let loggedUser = {
+        _id: decoded.userId
+      };
+      req.loggedUser = loggedUser;
+      next();
+    } else if (decoded.userId === req.params.userId) {
       req.authorized = true;
       next();
     } else {
