@@ -1,5 +1,10 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../../store/models/app.state';
+import { GET_REVIEWS } from '../../store/actions/reviews.actions';
+import { selectReviewsByOwner, selectLoggedinUser } from '../../store/reducers/core.reducer';
 import { UploadComponent } from '../upload/upload.component';
 import { ReviewService } from '../../shared/services/review.service';
 import { CreateComponentService } from '../../shared/services/create-component.service';
@@ -19,8 +24,13 @@ export class PostComponent implements OnInit {
   private userId: string;
   places: any[] = [];
 
-  constructor(private reviewService: ReviewService, private route: ActivatedRoute, private createComponentService: CreateComponentService) {
+  constructor(private reviewService: ReviewService,
+    private route: ActivatedRoute,
+    private createComponentService: CreateComponentService,
+    private store: Store<AppState>
+  ) {
     this.review.reviewImgs = [];
+    this.store.dispatch({type: GET_REVIEWS});
   }
 
 
@@ -29,14 +39,26 @@ export class PostComponent implements OnInit {
     this.userId = this.route.snapshot.params.userId;
     
     if (this.reviewId) {
-      this.reviewService.getSingleByOwner(this.reviewId)
+      this.store.pipe(
+        select(selectLoggedinUser)
+      )
+      .subscribe();
+      
+      this.store.pipe(
+        select(selectReviewsByOwner),
+      )
+      .subscribe(reviews => {
+        console.log(reviews);
+        this.review = reviews.find(review => review.user === this.userId);
+      });
+      /*this.reviewService.getSingleByOwner(this.reviewId)
       .subscribe(response => {
         this.review = response.data;
         let location: any;
         location.placeId = this.review.location;
         location.id = this.review._id;
         this.places = location;
-      });
+      });*/
     }
   }
 
