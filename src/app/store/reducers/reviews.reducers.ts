@@ -28,6 +28,13 @@ export function reviewsReducer(state = initialState, action: actions.ReviewsActi
 				loading: false,
 				loaded: false
 			}
+		case actions.SAVE_REVIEW_SUCCESS:
+		case actions.UPDATE_REVIEW_SUCCESS:
+			let reviews = [...state.reviews, action.payload];
+			return {
+				...state,
+				reviews
+			}
 
 		default:
 			return state;

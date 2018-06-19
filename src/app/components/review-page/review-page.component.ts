@@ -29,10 +29,12 @@ export class ReviewPageComponent implements OnInit {
     let id = this.route.snapshot.params.reviewId;
     this.store.pipe(
       select(selectReviews),
-      map(reviews => reviews)
     )
     .subscribe(reviews => {
         this.review = reviews.filter(review => review._id === id)[0];
+        if(this.review) {
+          this.slideImgs = [...this.review.reviewImgs];
+        }
     })
   }
 

@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../store/models/app.state';
-import { GET_REVIEWS } from '../../store/actions/reviews.actions';
-import { selectReviewsByOwner, selectLoggedinUser } from '../../store/reducers/core.reducer';
+import { GET_REVIEWS, SAVE_REVIEW, UPDATE_REVIEW } from '../../store/actions/reviews.actions';
+import { selectReviewsByOwner, selectLoggedinUser, selectReviews } from '../../store/reducers/core.reducer';
 import { UploadComponent } from '../upload/upload.component';
 import { ReviewService } from '../../shared/services/review.service';
 import { CreateComponentService } from '../../shared/services/create-component.service';
@@ -43,13 +43,15 @@ export class PostComponent implements OnInit {
         select(selectLoggedinUser)
       )
       .subscribe();
-      
+
       this.store.pipe(
         select(selectReviewsByOwner),
       )
       .subscribe(reviews => {
-        console.log(reviews);
-        this.review = reviews.find(review => review.user === this.userId);
+        if(reviews && reviews.length) {
+          this.review = reviews.find(review => review._id === this.reviewId);
+          console.log(this.review);
+        }
       });
       /*this.reviewService.getSingleByOwner(this.reviewId)
       .subscribe(response => {
@@ -92,15 +94,16 @@ export class PostComponent implements OnInit {
 
     if (this.reviewId) {
       fd.delete('reviewImgs');
-      this.reviewService.updateReview(this.reviewId, fd)
+      console.log(this.reviewId);
+      this.store.dispatch({type: UPDATE_REVIEW, payload: {id: this.reviewId, data: fd}})
+      /*this.reviewService.updateReview(this.reviewId, fd)
       .subscribe(response => {
-        // console.log(response.data);
-      })
+      })*/
     } else {
-      this.reviewService.saveReview(fd)
+      this.store.dispatch({type: SAVE_REVIEW, payload: fd})
+      /*this.reviewService.saveReview(fd)
       .subscribe(response => {
-        // console.log(response.data);
-      })
+      })*/
     }
   }
 /*

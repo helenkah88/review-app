@@ -33,10 +33,9 @@ export const selectReviewsByOwner = createSelector(
 	selectLoggedinUser,
 	selectReviews,
 	(loggedinUser, reviews) => {
-    console.log(reviews);
 		if(loggedinUser && reviews) {
 			let res = reviews.filter(review => loggedinUser === review.user._id);
-			console.log(loggedinUser, reviews, res);
+			// console.log(loggedinUser, reviews, res);
 			return res;
 		}
 	}

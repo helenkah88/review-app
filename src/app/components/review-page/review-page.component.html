@@ -9,8 +9,8 @@
       <mat-card-content>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, modi.</p>
       </mat-card-content>
-      <!-- <review-app-maps [reviews]="reviews$ | async"></review-app-maps> -->
-      <!-- <review-app-carousel [reviews]="reviews$ | async"></review-app-carousel> -->
+      <review-app-maps *reviewGoogleLoad [reviews]="[review]"></review-app-maps>
+      <review-app-carousel [slideImgs]="slideImgs"></review-app-carousel>
       <mat-card-actions>
         <button mat-button>LIKE</button>
         <button mat-button>SHARE</button>

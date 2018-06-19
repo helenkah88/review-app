@@ -13,8 +13,8 @@ declare var google: any;
 export class MapsComponent implements OnInit, OnChanges {
 
   @Output() private addressEmitter: EventEmitter<string> = new EventEmitter();
-  @Input() public places: any[];
-  @Input() private reviews: Review[];
+  @Input() public places: any[] = [];
+  @Input() private reviews: Review[] = [];
 
   @ViewChild('gmap') gmap: ElementRef;
 
@@ -32,12 +32,17 @@ export class MapsComponent implements OnInit, OnChanges {
     const self = this;
     let geocoder = new google.maps.Geocoder;
 
-    this.places = this.reviews.map(item => {
-      return {
-        placeId: item.location,
-        id: item._id
-      };
-    });
+    if(this.reviews.length) {
+      this.reviews = this.reviews.filter(review => review !== undefined);
+      if(!this.reviews.length) return;
+      this.places = this.reviews.map(item => {
+        return {
+          placeId: item.location,
+          id: item._id
+        };
+      });
+    }
+
     if(this.places.length) {
       if(this.places.length === 1) {
         this.zoom = 12;
