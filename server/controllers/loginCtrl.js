@@ -21,9 +21,14 @@ module.exports = (req, res) => {
       if (result) {
         let token = jwt.sign({userId: user._id}, 'secret', { expiresIn: 1800});
         res.status(200).json({
-          _id: user._id,
-          username,
-          token,
+          token: token,
+          data: {
+            _id: user._id,
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email
+          },
           msg: 'Auth successful'
         });
       }

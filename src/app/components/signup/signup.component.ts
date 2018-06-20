@@ -21,15 +21,9 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.newUser = new User();
-
-    this.store.pipe(
-      select(selectLoggedinUser)
-    )
-    .subscribe(user => console.log(user))
   }
 
   signup() {
-    console.log('signup');
     this.store.dispatch({ type: actions.SIGNUP, payload: this.newUser});
   }
 

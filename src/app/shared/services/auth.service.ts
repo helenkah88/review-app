@@ -31,7 +31,7 @@ export class AuthService {
     return !!localStorage.getItem(this.TOKEN_KEY);
   }
 
-  getLoggedinUser() {
+  getLoggedinUser(): Observable<any> {
     return this.http.get(this.path + '/loggedin_user', {
       headers: new HttpHeaders({
          'Content-Type': 'application/json'

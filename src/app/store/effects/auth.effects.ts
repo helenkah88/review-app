@@ -22,8 +22,8 @@ export class AuthEffects {
 				.map(response => {
 					this.authService.saveToken(response.token);
 					console.log(response);
-					this.router.navigate(['/profile', response._id]);
-					return new actions.LoginSuccess(response);
+					this.router.navigate(['/profile', response.data._id]);
+					return new actions.LoginSuccess(response.data);
 				});
 		})
 	);
@@ -34,7 +34,8 @@ export class AuthEffects {
 		switchMap(() => {
 			return this.authService.getLoggedinUser()
 			.map(response => {
-				return new actions.GetLoggedinUserSuccess(response);
+				console.log(response, response.data);
+				return new actions.GetLoggedinUserSuccess(response.data);
 			})
 		})	
 	)

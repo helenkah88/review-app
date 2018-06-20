@@ -26,7 +26,7 @@ export const selectUsers = createSelector(
 
 export const selectLoggedinUser = createSelector(
 	(state: AppState) => state.loggedinUser,
-	fromAuth.getLoggedinUserId
+	fromAuth.getLoggedinUser
 );
 
 export const selectReviewsByOwner = createSelector(
@@ -34,7 +34,7 @@ export const selectReviewsByOwner = createSelector(
 	selectReviews,
 	(loggedinUser, reviews) => {
 		if(loggedinUser && reviews) {
-			let res = reviews.filter(review => loggedinUser === review.user._id);
+			let res = reviews.filter(review => loggedinUser.id === review.user._id);
 			// console.log(loggedinUser, reviews, res);
 			return res;
 		}

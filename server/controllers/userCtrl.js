@@ -29,7 +29,24 @@ module.exports.getProfile = (req, res) => {
 
 module.exports.getLoggedinUser = (req, res) => {
   if(req.loggedUser._id) {
-    res.status(200).json(req.loggedUser);
+    User.findById(req.loggedUser._id)
+    .then(result => {
+      res.status(200).json({
+        data: {
+          _id: result._id,
+          username: result.username,
+          firstName: result.firstName,
+          lastName: result.lastName,
+          email: result.email
+        }
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        msg: err
+      });
+    });
   } else {
     res.status(500).json({
       msg: 'user not found'

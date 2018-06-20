@@ -35,6 +35,4 @@ export function usersReducer(state = allUsersState, action: actions.UsersAction)
 	}
 }
 
-export const getUsers = (state: UsersState) => {
-	return state.users
-}
+export const getUsers = (state: UsersState) => state.users;

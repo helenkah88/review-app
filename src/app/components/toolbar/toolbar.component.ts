@@ -37,9 +37,9 @@ export class ToolbarComponent implements OnInit {
   ngOnInit() {
     this.store.pipe(
       select(selectLoggedinUser)
-    ).subscribe(userId => {
-      console.log(userId);
-      this.loggedInUserId = userId;
+    ).subscribe(user => {
+      console.log(user);
+      this.loggedInUserId = user.id;
     })
   }
 

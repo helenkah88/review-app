@@ -16,7 +16,6 @@ import { User } from '../../models/user';
 export class SettingsComponent implements OnInit {
 
   user: User;
-  private userId: string;
 
   constructor(
     private store: Store<AppState>,
@@ -26,20 +25,15 @@ export class SettingsComponent implements OnInit {
     this.store.pipe(
       select(selectLoggedinUser)
     )
-    .subscribe(id => this.userId = id);
-    /*this.userService.getOwner(id)
-    .subscribe(response => {
-      this.user = response.data;
-      console.log(this.user);
-    })*/
+    .subscribe(user => {
+      this.user = user;
+      console.log(user);
+    });
+    
   }
 
   saveSettings() {
     this.store.dispatch({type: UPDATE_USER, payload: this.user});
-    /*this.userService.updateUser(this.user)
-    .subscribe(response => {
-        console.log(response.msg);
-    })*/
   }
 
   /*deleteProfile(id) {
