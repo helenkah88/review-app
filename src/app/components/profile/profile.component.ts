@@ -45,7 +45,7 @@ export class ProfileComponent implements OnInit {
       console.log(this.user);
     })*/
   }
-
+/*
   deleteReview(id) {
     this.reviewService.deleteReview(id)
     .subscribe(response => {
@@ -53,10 +53,10 @@ export class ProfileComponent implements OnInit {
           return item._id !== id;
         })
     })
-  }
+  }*/
 
-  saveSettings() {
+  /*saveSettings() {
 
-  }
+  }*/
 
 }

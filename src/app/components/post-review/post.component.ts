@@ -6,7 +6,6 @@ import { AppState } from '../../store/models/app.state';
 import { GET_REVIEWS, SAVE_REVIEW, UPDATE_REVIEW } from '../../store/actions/reviews.actions';
 import { selectReviewsByOwner, selectLoggedinUser, selectReviews } from '../../store/reducers/core.reducer';
 import { UploadComponent } from '../upload/upload.component';
-import { ReviewService } from '../../shared/services/review.service';
 import { CreateComponentService } from '../../shared/services/create-component.service';
 
 import { Review } from '../../models/review';
@@ -24,7 +23,7 @@ export class PostComponent implements OnInit {
   private userId: string;
   places: any[] = [];
 
-  constructor(private reviewService: ReviewService,
+  constructor(
     private route: ActivatedRoute,
     private createComponentService: CreateComponentService,
     private store: Store<AppState>
@@ -50,30 +49,21 @@ export class PostComponent implements OnInit {
       .subscribe(reviews => {
         if(reviews && reviews.length) {
           this.review = reviews.find(review => review._id === this.reviewId);
-          console.log(this.review);
         }
       });
-      /*this.reviewService.getSingleByOwner(this.reviewId)
-      .subscribe(response => {
-        this.review = response.data;
-        let location: any;
-        location.placeId = this.review.location;
-        location.id = this.review._id;
-        this.places = location;
-      });*/
     }
   }
 
   deleteImg(e, idx) {
     e.preventDefault();
-
+/*
     if (e.target.tagName !== 'A') return;
     this.reviewService.deleteReviewImg(this.reviewId, idx)
       .subscribe(response => {
         this.review.reviewImgs = this.review.reviewImgs.filter((img, i) => {
           return i !== idx;
         })
-      })
+      })*/
   }
 
   setAddress(data) {
@@ -94,16 +84,9 @@ export class PostComponent implements OnInit {
 
     if (this.reviewId) {
       fd.delete('reviewImgs');
-      console.log(this.reviewId);
-      this.store.dispatch({type: UPDATE_REVIEW, payload: {id: this.reviewId, data: fd}})
-      /*this.reviewService.updateReview(this.reviewId, fd)
-      .subscribe(response => {
-      })*/
+      this.store.dispatch({type: UPDATE_REVIEW, payload: {id: this.reviewId, data: fd}});
     } else {
-      this.store.dispatch({type: SAVE_REVIEW, payload: fd})
-      /*this.reviewService.saveReview(fd)
-      .subscribe(response => {
-      })*/
+      this.store.dispatch({type: SAVE_REVIEW, payload: fd});
     }
   }
 /*

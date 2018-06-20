@@ -34,7 +34,7 @@ export class SaveReview implements Action {
 
 export class SaveReviewSuccess implements Action {
 	readonly type = SAVE_REVIEW_SUCCESS;
-	constructor(public payload: Review[]) {}
+	constructor(public payload: any) {}
 }
 export class SaveReviewFail implements Action {
 	readonly type = SAVE_REVIEW_FAIL;

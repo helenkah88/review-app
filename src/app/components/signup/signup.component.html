@@ -5,13 +5,13 @@
     <input matInput placeholder="First Name" name="firstName" #firstName="ngModel" [(ngModel)]="newUser.firstName">
   </mat-form-field>
   <mat-form-field class="form-control">
-    <input matInput placeholder="Last Name">
+    <input matInput placeholder="Last Name" name="lastName" #lastName="ngModel" [(ngModel)]="newUser.lastName">
   </mat-form-field>
   <mat-form-field class="form-control" style="width: 100%;">
     <input matInput placeholder="Username" name="username" required #username="ngModel" [(ngModel)]="newUser.username">
   </mat-form-field>
   <mat-form-field class="form-control email">
-    <input type="email" matInput placeholder="Email">
+    <input type="email" matInput placeholder="Email" name="email" #email="ngModel" [(ngModel)]="newUser.email">
   </mat-form-field>
   <mat-form-field class="form-control">
     <input type="password" matInput placeholder="Password" name="password" [(ngModel)]="newUser.password">

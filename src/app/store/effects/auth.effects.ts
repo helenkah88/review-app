@@ -22,6 +22,7 @@ export class AuthEffects {
 				.map(response => {
 					this.authService.saveToken(response.token);
 					console.log(response);
+					this.router.navigate(['/profile', response._id]);
 					return new actions.LoginSuccess(response);
 				});
 		})
@@ -47,7 +48,7 @@ export class AuthEffects {
 		switchMap((payload) => {
 			return this.authService.signup(payload)
 				.map(response => {
-					this.authService.saveToken(response.data.token);
+					this.authService.saveToken(response.token);
 					this.router.navigate(['/profile', response.data._id]);
 					return new actions.SignupSuccess(response.data);
 				});

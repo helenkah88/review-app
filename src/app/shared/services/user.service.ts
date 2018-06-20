@@ -35,8 +35,8 @@ export class UserService {
     });
   }
 
-  updateUser(id: string, user): Observable<any> {
-    return this.http.put(this.path + '/profile/' + id, user, {
+  updateUser(user): Observable<any> {
+    return this.http.put(this.path + '/profile/' + user._id, user, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })

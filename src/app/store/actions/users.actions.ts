@@ -6,6 +6,10 @@ export const GET_USERS = '[Users] Get Users';
 export const GET_USERS_SUCCESS = '[Users] Get Users Success';
 export const GET_USERS_FAIL = '[Users] Get Users Fail';
 
+export const UPDATE_USER = '[Users] Update User';
+export const UPDATE_USER_SUCCESS = '[Users] Update User Success';
+export const UPDATE_USER_FAIL = '[Users] Update User Fail';
+
 export class GetUsers implements Action {
 	readonly type = GET_USERS;
 }
@@ -19,6 +23,23 @@ export class GetUsersFail implements Action {
 	constructor(payload: any) {}
 }
 
+export class UpdateUser implements Action {
+	readonly type = UPDATE_USER;
+	constructor(public payload: User) {}
+}
+
+export class UpdateUserSuccess implements Action {
+	readonly type = UPDATE_USER_SUCCESS;
+	constructor(public payload: any) {}
+}
+export class UpdateUserFail implements Action {
+	readonly type = UPDATE_USER_FAIL;
+	constructor(payload: any) {}
+}
+
 export type UsersAction = GetUsers
  | GetUsersSuccess
  | GetUsersFail
+ | UpdateUser
+ | UpdateUserSuccess
+ | UpdateUserFail
