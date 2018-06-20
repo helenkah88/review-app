@@ -13,8 +13,19 @@ export class UsersEffects {
 
 	@Effect()
 	users$ = this.actions$.ofType(actions.GET_USERS)
-		.switchMap(() => {
-			return this.userService.getAll()
-				.map(response => new actions.GetUsersSuccess(response.data));
-		})
+	.switchMap(() => {
+		return this.userService.getAll()
+			.map(response => new actions.GetUsersSuccess(response.data));
+	});
+
+	@Effect()
+	updatedUser$ = this.actions$.ofType(actions.UPDATE_USER)
+	.map((action: actions.UpdateUser) => action.payload)
+	.switchMap(payload => {
+		return this.userService.updateUser(payload)
+			.map(response => {
+				console.log(response.data);
+				return new actions.UpdateUserSuccess(response.data);
+			});
+	});
 }

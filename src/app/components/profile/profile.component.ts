@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 
-import { Store, select } from '@ngrx/store'
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../../store/models/app.state';
 
-import { UserService } from '../../shared/services/user.service';
 import { ReviewService } from '../../shared/services/review.service';
 import { User } from '../../models/user';
-import { AppState } from '../../store/models/app.state';
-import { selectReviews } from '../../store/reducers/core.reducer';
+import { Review } from '../../models/review';
+import { GET_REVIEWS } from '../../store/actions/reviews.actions';
+import { selectReviewsByOwner, selectLoggedinUser } from '../../store/reducers/core.reducer';
 
 @Component({
   selector: 'review-app-profile',
@@ -16,23 +18,34 @@ import { selectReviews } from '../../store/reducers/core.reducer';
 })
 export class ProfileComponent implements OnInit {
 
-  user: User = new User;
+  reviews$: Observable<Review[]>;
+  userId: string;
 
   constructor(
-    private userService: UserService,
     private reviewService: ReviewService,
     private route: ActivatedRoute,
-    private store: Store<AppState>) {}
+    private store: Store<AppState>
+  ) {
+    this.store.dispatch({type: GET_REVIEWS});
+  }
 
   ngOnInit() {
-    let id = this.route.snapshot.params.userId;
+    this.reviews$ = this.store.pipe(
+      select(selectReviewsByOwner)
+    );
+
+    this.store.pipe(
+      select(selectLoggedinUser)
+    )
+    .subscribe(userId => this.userId = userId)
+    /*let id = this.route.snapshot.params.userId;
     this.userService.getOwner(id)
     .subscribe(response => {
       this.user = response.data;
       console.log(this.user);
-    })
+    })*/
   }
-
+/*
   deleteReview(id) {
     this.reviewService.deleteReview(id)
     .subscribe(response => {
@@ -40,10 +53,10 @@ export class ProfileComponent implements OnInit {
           return item._id !== id;
         })
     })
-  }
+  }*/
 
-  saveSettings() {
+  /*saveSettings() {
 
-  }
+  }*/
 
 }

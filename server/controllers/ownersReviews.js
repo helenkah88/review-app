@@ -35,6 +35,13 @@ module.exports.update = (req, res) => {
     .then(result => {
       let response = {
         msg: "Review updated",
+        data: {
+          _id: result._id,
+          title: result.title,
+          user: result.user,
+          reviewImgs: result.reviewImgs,
+          location: result.location
+        },
         request: {
           method: 'GET',
           url: 'http://localhost:3000/review/' + result.user + '/' + req.params.reviewId
@@ -68,6 +75,7 @@ module.exports.addReview = (req, res) => {
         data: {
           _id: result._id,
           title: result.title,
+          user: result.user,
           reviewImgs: result.reviewImgs,
           location: result.location
         },

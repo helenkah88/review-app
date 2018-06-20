@@ -13,20 +13,23 @@ module.exports = (req, res) => {
     }
 
     bcrypt.hash(req.body.password, 10, (err, hash) => {
-      let newUser = {
+      /*let newUser = {
         username: req.body.username,
         password: hash
-      }
+      }*/
       
-      User.create(newUser)
+      User.create(req.body)
       .then(result => {
         let token = jwt.sign({userId: result._id}, 'secret', { expiresIn: 1800});
         let response = {
           msg: "User created",
+          token: token,
           data: {
-            token: token,
             _id: result._id,
-            username: result.username
+            username: result.username,
+            firstName: result.firstName,
+            lastName: result.lastName,
+            email: result.email
           },
           request: {
             method: 'GET',

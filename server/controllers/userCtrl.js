@@ -27,6 +27,16 @@ module.exports.getProfile = (req, res) => {
   });
 };
 
+module.exports.getLoggedinUser = (req, res) => {
+  if(req.loggedUser._id) {
+    res.status(200).json(req.loggedUser);
+  } else {
+    res.status(500).json({
+      msg: 'user not found'
+    });
+  }
+}
+
 module.exports.update = (req, res) => {
   User.update({_id: req.params.userId}, { $set: req.body})
   .then(result => {

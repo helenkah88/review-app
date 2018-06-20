@@ -1,5 +1,5 @@
 <div class="container">
-  <form #form="ngForm">
+  <form #form="ngForm" *ngIf="review">
   <mat-form-field class="form-control">
     <input matInput placeholder="title" name="title" #title="ngModel" [(ngModel)]="review.title">
   </mat-form-field>
@@ -7,7 +7,7 @@
     <textarea matInput placeholder="description" name="description" #description="ngModel" [(ngModel)]="review.description"></textarea>
   </mat-form-field> 
   <div class="map-container">
-    <!-- <review-app-maps (addressEmitter)="setAddress($event)" [reviews]="reviews$ | async"></review-app-maps> -->
+    <review-app-maps *reviewGoogleLoad (addressEmitter)="setAddress($event)" [reviews]="[]"></review-app-maps>
   </div>
  <h4 *ngIf="review.reviewImgs.length">Hover to delete</h4>
   <div class="img-thumbs">

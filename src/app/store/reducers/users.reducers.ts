@@ -23,6 +23,12 @@ export function usersReducer(state = allUsersState, action: actions.UsersAction)
 				loading: false,
 				loaded: false
 			}
+		case actions.UPDATE_USER_SUCCESS:
+			let users = [...state.users, action.payload];
+			return {
+				...state,
+				users
+			}
 
 		default:
 			return state;

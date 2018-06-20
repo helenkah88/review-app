@@ -9,7 +9,7 @@ import { Review } from '../../models/review';
 export class CarouselComponent implements OnInit, OnChanges {
 
   @Input() slideImgs: string[];
-  @Input() reviews: Review[];
+  @Input() reviews: Review[] = [];
   @Input() slideTo: string;
   @ViewChild('carousel') private carousel: ElementRef;
 

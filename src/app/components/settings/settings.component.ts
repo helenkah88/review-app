@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from '../../shared/services/user.service';
+
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../../store/models/app.state';
+import { UPDATE_USER } from '../../store/actions/users.actions';
+import { selectLoggedinUser } from '../../store/reducers/core.reducer';
+
 import { User } from '../../models/user';
 
 @Component({
@@ -11,30 +16,37 @@ import { User } from '../../models/user';
 export class SettingsComponent implements OnInit {
 
   user: User;
+  private userId: string;
 
-  constructor(private userService: UserService, private route: ActivatedRoute) { }
+  constructor(
+    private store: Store<AppState>,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    let id = this.route.snapshot.params.userId;
-    this.userService.getOwner(id)
+    this.store.pipe(
+      select(selectLoggedinUser)
+    )
+    .subscribe(id => this.userId = id);
+    /*this.userService.getOwner(id)
     .subscribe(response => {
       this.user = response.data;
       console.log(this.user);
-    })
+    })*/
   }
 
   saveSettings() {
-    this.userService.updateUser(this.user._id, this.user)
+    this.store.dispatch({type: UPDATE_USER, payload: this.user});
+    /*this.userService.updateUser(this.user)
     .subscribe(response => {
         console.log(response.msg);
-    })
+    })*/
   }
 
-  deleteProfile(id) {
+  /*deleteProfile(id) {
     this.userService.deleteUser(id)
     .subscribe(response => {
         console.log(response.msg);
     })
-  }
+  }*/
 
 }

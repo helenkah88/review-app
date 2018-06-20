@@ -6,7 +6,7 @@ import { User } from '../../models/user';
 import { AuthService } from '../../shared/services/auth.service';
 import * as actions from '../../store/actions/auth.actions';
 import { AppState } from '../../store/models/app.state';
-import { selectCurrentUser } from '../../store/reducers/core.reducer';
+import { selectLoggedinUser } from '../../store/reducers/core.reducer';
 
 @Component({
   selector: 'review-app-signup',
@@ -23,12 +23,13 @@ export class SignupComponent implements OnInit {
     this.newUser = new User();
 
     this.store.pipe(
-      select(selectCurrentUser)
+      select(selectLoggedinUser)
     )
-    .subscribe()
+    .subscribe(user => console.log(user))
   }
 
   signup() {
+    console.log('signup');
     this.store.dispatch({ type: actions.SIGNUP, payload: this.newUser});
   }
 
