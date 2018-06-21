@@ -13,7 +13,11 @@ module.exports = (req, res) => {
     }
 
     bcrypt.hash(req.body.password, 10, (err, hash) => {
-      User.create(req.body)
+      let newUser = {
+        ...req.body,
+        password: hash
+      };
+      User.create(newUser)
       .then(result => {
         let token = jwt.sign({userId: result._id}, 'secret', { expiresIn: 1800});
         let response = {

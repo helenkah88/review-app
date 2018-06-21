@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     this.store.pipe(
       select(selectLoggedinUser)
     )
-    .subscribe(user => console.log(user))
+    .subscribe()
   }
 
   dismiss() {

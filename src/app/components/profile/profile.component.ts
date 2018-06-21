@@ -5,10 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../store/models/app.state';
 
-import { ReviewService } from '../../shared/services/review.service';
 import { User } from '../../models/user';
 import { Review } from '../../models/review';
-import { GET_REVIEWS } from '../../store/actions/reviews.actions';
+import { GET_REVIEWS, DELETE_REVIEW } from '../../store/actions/reviews.actions';
 import { selectReviewsByOwner, selectLoggedinUser } from '../../store/reducers/core.reducer';
 
 @Component({
@@ -19,10 +18,9 @@ import { selectReviewsByOwner, selectLoggedinUser } from '../../store/reducers/c
 export class ProfileComponent implements OnInit {
 
   reviews$: Observable<Review[]>;
-  userId: string;
+  user: User;
 
   constructor(
-    private reviewService: ReviewService,
     private route: ActivatedRoute,
     private store: Store<AppState>
   ) {
@@ -37,26 +35,11 @@ export class ProfileComponent implements OnInit {
     this.store.pipe(
       select(selectLoggedinUser)
     )
-    .subscribe(userId => this.userId = userId)
-    /*let id = this.route.snapshot.params.userId;
-    this.userService.getOwner(id)
-    .subscribe(response => {
-      this.user = response.data;
-      console.log(this.user);
-    })*/
+    .subscribe(user => this.user = user);
   }
-/*
+
   deleteReview(id) {
-    this.reviewService.deleteReview(id)
-    .subscribe(response => {
-        this.user.reviews = this.user.reviews.filter(item => {
-          return item._id !== id;
-        })
-    })
-  }*/
-
-  /*saveSettings() {
-
-  }*/
+    this.store.dispatch({type: DELETE_REVIEW, payload: id})
+  }
 
 }

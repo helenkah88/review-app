@@ -35,6 +35,18 @@ export function reviewsReducer(state = initialState, action: actions.ReviewsActi
 				...state,
 				reviews
 			}
+		case actions.DELETE_REVIEW_SUCCESS:
+			return {
+				...state,
+				reviews: state.reviews.filter(review => review._id !== action.payload)
+			}
+		case actions.DELETE_REVIEW_SUCCESS:
+			return {
+				...state,
+				reviews: state.reviews.filter(review => {
+					review.reviewImgs.splice(action.payload, 1);
+				})
+			}
 
 		default:
 			return state;

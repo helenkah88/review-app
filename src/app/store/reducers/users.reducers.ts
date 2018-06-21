@@ -29,6 +29,11 @@ export function usersReducer(state = allUsersState, action: actions.UsersAction)
 				...state,
 				users
 			}
+		case actions.DELETE_USER_SUCCESS:
+			return {
+				...state,
+				users: state.users.filter(user => user._id !== action.payload)
+			}
 
 		default:
 			return state;

@@ -102,8 +102,10 @@ module.exports.deleteReview = (req, res) => {
     })
     .then(result => {
       User.findByIdAndUpdate(result.user, {$pull: {reviews: req.params.reviewId}})
-      .then(() => {
+      .then((result) => {
         let response = {
+          _id: req.params.reviewId,
+          userId: result._id,
           msg: `Review ${req.params.reviewId} deleted`,
           request: {
             method: 'POST',

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../store/models/app.state';
-import { GET_REVIEWS, SAVE_REVIEW, UPDATE_REVIEW } from '../../store/actions/reviews.actions';
+import { GET_REVIEWS, SAVE_REVIEW, UPDATE_REVIEW, DELETE_REVIEW_IMAGE } from '../../store/actions/reviews.actions';
 import { selectReviewsByOwner, selectLoggedinUser, selectReviews } from '../../store/reducers/core.reducer';
 import { UploadComponent } from '../upload/upload.component';
 import { CreateComponentService } from '../../shared/services/create-component.service';
@@ -19,6 +19,7 @@ import { Review } from '../../models/review';
 export class PostComponent implements OnInit {
 
   review: Review = new Review();
+  mapREview: Review[] = [];
   private reviewId: string;
   private userId: string;
   places: any[] = [];
@@ -49,6 +50,7 @@ export class PostComponent implements OnInit {
       .subscribe(reviews => {
         if(reviews && reviews.length) {
           this.review = reviews.find(review => review._id === this.reviewId);
+          this.mapREview = [this.review];
         }
       });
     }
@@ -56,14 +58,9 @@ export class PostComponent implements OnInit {
 
   deleteImg(e, idx) {
     e.preventDefault();
-/*
+
     if (e.target.tagName !== 'A') return;
-    this.reviewService.deleteReviewImg(this.reviewId, idx)
-      .subscribe(response => {
-        this.review.reviewImgs = this.review.reviewImgs.filter((img, i) => {
-          return i !== idx;
-        })
-      })*/
+    this.store.dispatch({type: DELETE_REVIEW_IMAGE, payload: {reviewId: this.reviewId, index: idx}});
   }
 
   setAddress(data) {

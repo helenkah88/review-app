@@ -13,7 +13,6 @@ export function loggedinUserReducer(state = loggedinUser, action: actions.UsersA
 		case actions.LOGIN_SUCCESS:
 		case actions.GET_LOGGEDIN_USER_SUCCESS:
 			let payload = action.payload;
-			console.log(payload);
 			return {
 				...state,
 				data: {

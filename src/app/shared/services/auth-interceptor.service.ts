@@ -20,8 +20,9 @@ export class AuthInterceptorService implements HttpInterceptor {
     .do(null, (err: any) => {
       if(err instanceof HttpErrorResponse) {
         if(err.status === 401) {
+          auth.logout();
           let dialogRef = this.dialog.open(LoginComponent, {
-            width: '300px'
+            width: '500px'
           });
         }
       }

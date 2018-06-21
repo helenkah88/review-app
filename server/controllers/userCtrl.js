@@ -57,8 +57,13 @@ module.exports.getLoggedinUser = (req, res) => {
 module.exports.update = (req, res) => {
   User.update({_id: req.params.userId}, { $set: req.body})
   .then(result => {
+    console.log(result);
     let response = {
       msg: "User updated",
+      data: {
+        ...req.body,
+        _id: req.params.userId
+      },
       request: {
         method: 'GET',
         url: 'http://localhost:3000/profile/' + req.params.userId
@@ -77,6 +82,7 @@ module.exports.deleteUser = (req, res) => {
   })
   .then(result => {
     let response = {
+      _id: req.params.userId,
       msg: 'User deleted',
       request: {
         method: 'POST',

@@ -10,6 +10,14 @@ export const SAVE_REVIEW = '[Reviews] Save Review';
 export const SAVE_REVIEW_SUCCESS = '[Reviews] Save Review Success';
 export const SAVE_REVIEW_FAIL = '[Reviews] Save Review Fail';
 
+export const DELETE_REVIEW = '[Reviews] Delete Review';
+export const DELETE_REVIEW_SUCCESS = '[Reviews] Delete Review Success';
+export const DELETE_REVIEW_FAIL = '[Reviews] Delete Review Fail';
+
+export const DELETE_REVIEW_IMAGE = '[Reviews] Delete Review Image';
+export const DELETE_REVIEW_IMAGE_SUCCESS = '[Reviews] Delete Review Image Success';
+export const DELETE_REVIEW_IMAGE_FAIL = '[Reviews] Delete Review Image Fail';
+
 export const UPDATE_REVIEW = '[Reviews] Update Review';
 export const UPDATE_REVIEW_SUCCESS = '[Reviews] Update Review Success';
 export const UPDATE_REVIEW_FAIL = '[Reviews] Update Review Fail';
@@ -41,6 +49,34 @@ export class SaveReviewFail implements Action {
 	constructor(payload: any) {}
 }
 
+export class DeleteReview implements Action {
+	readonly type = DELETE_REVIEW;
+	constructor(public payload: string) {}
+}
+
+export class DeleteReviewSuccess implements Action {
+	readonly type = DELETE_REVIEW_SUCCESS;
+	constructor(public payload: any) {}
+}
+export class DeleteReviewFail implements Action {
+	readonly type = DELETE_REVIEW_FAIL;
+	constructor(payload: any) {}
+}
+
+export class DeleteReviewImage implements Action {
+	readonly type = DELETE_REVIEW_IMAGE;
+	constructor(public payload: any) {}
+}
+
+export class DeleteReviewImageSuccess implements Action {
+	readonly type = DELETE_REVIEW_IMAGE_SUCCESS;
+	constructor(public payload: any) {}
+}
+export class DeleteReviewImageFail implements Action {
+	readonly type = DELETE_REVIEW_IMAGE_FAIL;
+	constructor(payload: any) {}
+}
+
 export class UpdateReview implements Action {
 	readonly type = UPDATE_REVIEW;
 	constructor(public payload: any) {}
@@ -64,3 +100,9 @@ export type ReviewsAction = GetReviews
  | UpdateReview
  | UpdateReviewSuccess
  | UpdateReviewFail
+ | DeleteReview
+ | DeleteReviewSuccess
+ | DeleteReviewFail
+ | DeleteReviewImage
+ | DeleteReviewImageSuccess
+ | DeleteReviewImageFail

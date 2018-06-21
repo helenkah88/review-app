@@ -4,13 +4,13 @@
     <input matInput placeholder="First Name" name="firstName" #firstName="ngModel" [(ngModel)]="user.firstName">
   </mat-form-field>
   <mat-form-field class="form-control">
-    <input matInput placeholder="Last Name">
+    <input matInput placeholder="Last Name" name="lastName" #lastName="ngModel" [(ngModel)]="user.lastName">
   </mat-form-field>
   <mat-form-field class="form-control">
     <input matInput placeholder="Username" name="username" required #username="ngModel" [(ngModel)]="user.username">
   </mat-form-field>
   <mat-form-field class="form-control">
-    <input type="email" matInput placeholder="Email">
+    <input type="email" matInput placeholder="Email" name="email" #email="ngModel" [(ngModel)]="user.email">
   </mat-form-field>
   <mat-form-field class="form-control">
     <input type="password" matInput placeholder="Password" name="password" [(ngModel)]="user.password">
@@ -18,7 +18,8 @@
   <mat-form-field class="form-control">
     <input type="password" matInput placeholder="Confirm Password">
   </mat-form-field>
-  <button mat-raised-button color="primary" (click)="saveSettings()">click</button>
+  <button mat-raised-button color="primary" (click)="saveSettings()">save changes</button>
+  <a href="#" (click)="deleteProfile(user.id)">delete profile</a>
 </form>
-{{form.value | json}}
+<!-- {{form.value | json}} -->
 </div>

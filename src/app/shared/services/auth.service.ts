@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../../models/user';
@@ -9,7 +10,10 @@ export class AuthService {
   private TOKEN_KEY: string = 'token';
   private path:string = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   saveToken(token: string) {
     localStorage.setItem(this.TOKEN_KEY, token);
@@ -25,6 +29,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem(this.TOKEN_KEY);
+    this.router.navigate(['/']);
   }
 
   get isAuthenticated() {

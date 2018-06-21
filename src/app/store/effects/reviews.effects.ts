@@ -44,4 +44,26 @@ export class ReviewsEffects {
 				return new actions.UpdateReviewSuccess(response.data);
 			})
 	});
+
+	@Effect()
+	deletedReview$ = this.actions$.ofType(actions.DELETE_REVIEW)
+	.map((action: actions.DeleteReview) => action.payload)
+	.switchMap(payload => {
+		return this.reviewService.deleteReview(payload)
+			.map(response => {
+				console.log(response);
+				this.router.navigate(['/profile', response.userId]);
+				return new actions.DeleteReviewSuccess(response._id);
+			})
+	});
+
+	@Effect()
+	deletedReviewImage$ = this.actions$.ofType(actions.DELETE_REVIEW_IMAGE)
+	.map((action: actions.DeleteReviewImage) => action.payload)
+	.switchMap(payload => {
+		return this.reviewService.deleteReviewImg(payload.reviewId, payload.index)
+			.map(response => {
+				return new actions.DeleteReviewImageSuccess(payload.index);
+			})
+	});
 }

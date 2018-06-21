@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../store/models/app.state';
-import { UPDATE_USER } from '../../store/actions/users.actions';
+import { UPDATE_USER, DELETE_USER } from '../../store/actions/users.actions';
 import { selectLoggedinUser } from '../../store/reducers/core.reducer';
 
 import { User } from '../../models/user';
@@ -36,11 +36,9 @@ export class SettingsComponent implements OnInit {
     this.store.dispatch({type: UPDATE_USER, payload: this.user});
   }
 
-  /*deleteProfile(id) {
-    this.userService.deleteUser(id)
-    .subscribe(response => {
-        console.log(response.msg);
-    })
-  }*/
+  deleteProfile(id) {
+    this.store.dispatch({type: DELETE_USER, payload: id});
+    return false;
+  }
 
 }
