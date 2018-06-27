@@ -30,26 +30,51 @@ module.exports.getSingle = (req, res) => {
 };
 
 module.exports.update = (req, res) => {
-  let files = req.files.map(file => file.path);
-  Review.findByIdAndUpdate(req.params.reviewId, { $set: req.body, $push: { reviewImgs: { $each: files} }})
-    .then(result => {
-      let response = {
-        msg: "Review updated",
-        data: {
-          _id: result._id,
-          title: result.title,
-          user: result.user,
-          reviewImgs: result.reviewImgs,
-          location: result.location
-        },
-        request: {
-          method: 'GET',
-          url: 'http://localhost:3000/review/' + result.user + '/' + req.params.reviewId
-        }
-      };
+  let body = {
+    _id: req.body._id,
+    title: req.body.title,
+    user: req.body.user
+  };
 
-      res.status(201).json(response);
-    })
+  let imgsToDelete = [];
+  console.log('imgsToDelete from req body ', req.body.imgsToDelete)
+  console.log('files from req body ', req.body.files)
+
+  if(typeof req.body.imgsToDelete === 'string') {
+    imgsToDelete.push(req.body.imgsToDelete);
+  } else {
+    imgsToDelete = imgsToDelete.concat(req.body.imgsToDelete);
+    console.log(1, imgsToDelete)
+  };
+  let files = req.files.map(file => file.path);
+  console.log(imgsToDelete)
+  console.log(files)
+
+  Review.findByIdAndUpdate(req.params.reviewId, {$pull: {reviewImgs: { $in: imgsToDelete }}})
+    .then(result => {
+      console.log('files ', files, `--
+        --
+        --`)
+      return Review.findByIdAndUpdate(req.params.reviewId, { $set: body, $push: { reviewImgs: { $each: files} }})
+      })
+      .then(result => {
+        let response = {
+          msg: "Review updated",
+          data: {
+            _id: result._id,
+            title: result.title,
+            user: result.user,
+            reviewImgs: result.reviewImgs,
+            location: result.location
+          },
+          request: {
+            method: 'GET',
+            url: 'http://localhost:3000/review/' + result.user + '/' + req.params.reviewId
+          }
+        };
+
+        res.status(201).json(response);
+      })
     .catch(err => console.log(err));
 };
 

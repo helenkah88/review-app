@@ -56,14 +56,4 @@ export class ReviewsEffects {
 				return new actions.DeleteReviewSuccess(response._id);
 			})
 	});
-
-	@Effect()
-	deletedReviewImage$ = this.actions$.ofType(actions.DELETE_REVIEW_IMAGE)
-	.map((action: actions.DeleteReviewImage) => action.payload)
-	.switchMap(payload => {
-		return this.reviewService.deleteReviewImg(payload.reviewId, payload.index)
-			.map(response => {
-				return new actions.DeleteReviewImageSuccess(payload.index);
-			})
-	});
 }

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../store/models/app.state';
-import { GET_REVIEWS, SAVE_REVIEW, UPDATE_REVIEW, DELETE_REVIEW_IMAGE } from '../../store/actions/reviews.actions';
+import { GET_REVIEWS, SAVE_REVIEW, UPDATE_REVIEW } from '../../store/actions/reviews.actions';
 import { selectReviewsByOwner, selectLoggedinUser, selectReviews } from '../../store/reducers/core.reducer';
 import { UploadComponent } from '../upload/upload.component';
 import { CreateComponentService } from '../../shared/services/create-component.service';
@@ -19,10 +19,11 @@ import { Review } from '../../models/review';
 export class PostComponent implements OnInit {
 
   review: Review = new Review();
-  mapREview: Review[] = [];
+  mapReview: Review[] = [];
   private reviewId: string;
   private userId: string;
   places: any[] = [];
+  imagesToDelete: string[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -50,7 +51,7 @@ export class PostComponent implements OnInit {
       .subscribe(reviews => {
         if(reviews && reviews.length) {
           this.review = reviews.find(review => review._id === this.reviewId);
-          this.mapREview = [this.review];
+          this.mapReview = [this.review];
         }
       });
     }
@@ -60,7 +61,11 @@ export class PostComponent implements OnInit {
     e.preventDefault();
 
     if (e.target.tagName !== 'A') return;
-    this.store.dispatch({type: DELETE_REVIEW_IMAGE, payload: {reviewId: this.reviewId, index: idx}});
+
+    this.imagesToDelete.push(this.review.reviewImgs[idx]);
+    this.review.reviewImgs = this.review.reviewImgs.filter((img, i) => {
+      return i !== idx;
+    });
   }
 
   setAddress(data) {
@@ -68,23 +73,31 @@ export class PostComponent implements OnInit {
   }
 
   saveReview() {
-    let images = this.createComponentService.files;
+    let imagesToAdd = this.createComponentService.files;
+
     let fd = new FormData();
-    images.forEach(file => {
+    fd.delete('reviewImg');
+    imagesToAdd.forEach(file => {
       fd.append('reviewImg', file);
     });
     this.review.user = this.userId;
 
     for( let key in this.review) {
+      if(key === 'reviewImgs') continue;
       fd.append(key, this.review[key]);
     }
 
     if (this.reviewId) {
-      fd.delete('reviewImgs');
+      this.imagesToDelete.forEach(img => {
+        fd.append('imgsToDelete', img);
+      });
       this.store.dispatch({type: UPDATE_REVIEW, payload: {id: this.reviewId, data: fd}});
+
+      this.imagesToDelete.length = 0;
     } else {
       this.store.dispatch({type: SAVE_REVIEW, payload: fd});
     }
+    this.createComponentService.clearFiles();
   }
 /*
   onNewAdded(e) {

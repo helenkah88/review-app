@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
 
   try {
     let decoded = jwt.verify(token, 'secret');
-    console.log(decoded, req.params.userId);
+    // console.log(decoded, req.params.userId);
     if(decoded.userId) {
       let loggedUser = {
         _id: decoded.userId

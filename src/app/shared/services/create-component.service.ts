@@ -21,4 +21,8 @@ export class CreateComponentService {
     this.files.push(file);
   }
 
+  clearFiles() {
+    this.files.length = 0;
+  }
+
 }
